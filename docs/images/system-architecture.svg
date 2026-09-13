@@ -1,0 +1,138 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 810" width="1200" height="810" font-family="Segoe UI, Microsoft YaHei, PingFang SC, Hiragino Sans GB, sans-serif">
+  <title>暖芯 · AI 陪伴桌面机器人 系统架构</title>
+  <desc>四层架构：感知层、边缘计算层（SC171）、平台层、应用层。</desc>
+
+  <defs>
+    <marker id="up" viewBox="0 0 10 10" refX="5" refY="1.5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M5 0.5 L9 8 M5 0.5 L1 8" fill="none" stroke="#5F5E5A" stroke-width="1.6" stroke-linecap="round"/>
+    </marker>
+    <marker id="dn" viewBox="0 0 10 10" refX="5" refY="8.5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M5 9.5 L9 2 M5 9.5 L1 2" fill="none" stroke="#5F5E5A" stroke-width="1.6" stroke-linecap="round"/>
+    </marker>
+  </defs>
+
+  <text x="40" y="46" font-size="24" font-weight="600" fill="#102033">暖芯 · AI 陪伴桌面机器人 系统架构</text>
+  <text x="40" y="72" font-size="14" fill="#5F5E5A">平台：广和通 SC171 开发套件 V3（高通 QCM6490，13 TOPS） · Ubuntu 20.04 + Fibo AI Stack + ROS 2 · 端云协同</text>
+
+  <rect x="40" y="90" width="1120" height="110" rx="16" fill="#E6F1FB" stroke="#185FA5" stroke-width="0.5"/>
+  <rect x="56" y="106" width="120" height="78" rx="10" fill="#185FA5"/>
+  <text x="116" y="137" font-size="16" font-weight="600" fill="#FFFFFF" text-anchor="middle">应用层</text>
+  <text x="116" y="160" font-size="11" fill="#B5D4F4" text-anchor="middle">Application</text>
+
+  <rect x="196" y="106" width="305" height="78" rx="8" fill="#FFFFFF" stroke="#185FA5" stroke-width="0.5"/>
+  <text x="212" y="138" font-size="15" font-weight="600" fill="#042C53">Web 可视化后台</text>
+  <text x="212" y="162" font-size="12" fill="#5F5E5A">设备 · 传感器 · AI 配置</text>
+
+  <rect x="517" y="106" width="305" height="78" rx="8" fill="#FFFFFF" stroke="#185FA5" stroke-width="0.5"/>
+  <text x="533" y="138" font-size="15" font-weight="600" fill="#042C53">移动终端</text>
+  <text x="533" y="162" font-size="12" fill="#5F5E5A">手机 · 平板 App / 小程序</text>
+
+  <rect x="838" y="106" width="305" height="78" rx="8" fill="#FFFFFF" stroke="#185FA5" stroke-width="0.5"/>
+  <text x="854" y="138" font-size="15" font-weight="600" fill="#042C53">家电互联</text>
+  <text x="854" y="162" font-size="12" fill="#5F5E5A">智能灯控 · 场景联动</text>
+
+  <path d="M400 218 L400 202" fill="none" stroke="#5F5E5A" stroke-width="1.4" marker-start="url(#dn)" marker-end="url(#up)"/>
+  <path d="M900 218 L900 202" fill="none" stroke="#5F5E5A" stroke-width="1.4" marker-start="url(#dn)" marker-end="url(#up)"/>
+
+  <rect x="40" y="220" width="1120" height="160" rx="16" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.5"/>
+  <rect x="56" y="236" width="120" height="128" rx="10" fill="#534AB7"/>
+  <text x="116" y="292" font-size="16" font-weight="600" fill="#FFFFFF" text-anchor="middle">平台层</text>
+  <text x="116" y="315" font-size="11" fill="#CECBF6" text-anchor="middle">Cloud</text>
+
+  <rect x="196" y="236" width="305" height="56" rx="8" fill="#FFFFFF" stroke="#534AB7" stroke-width="0.5"/>
+  <text x="212" y="260" font-size="14" font-weight="600" fill="#26215C">设备管理</text>
+  <text x="212" y="280" font-size="12" fill="#5F5E5A">DID 注册 · 在线状态 · 远程指令</text>
+
+  <rect x="517" y="236" width="305" height="56" rx="8" fill="#FFFFFF" stroke="#534AB7" stroke-width="0.5"/>
+  <text x="533" y="260" font-size="14" font-weight="600" fill="#26215C">传感器管理</text>
+  <text x="533" y="280" font-size="12" fill="#5F5E5A">实时值 · 趋势分析 · 离线判定</text>
+
+  <rect x="838" y="236" width="305" height="56" rx="8" fill="#FFFFFF" stroke="#534AB7" stroke-width="0.5"/>
+  <text x="854" y="260" font-size="14" font-weight="600" fill="#26215C">AI 模型配置</text>
+  <text x="854" y="280" font-size="12" fill="#5F5E5A">激活模型 → 同步语音端 .env</text>
+
+  <rect x="196" y="308" width="466" height="56" rx="8" fill="#FFFFFF" stroke="#534AB7" stroke-width="0.5"/>
+  <text x="212" y="332" font-size="14" font-weight="600" fill="#26215C">视觉看护与 AI 对话</text>
+  <text x="212" y="352" font-size="12" fill="#5F5E5A">MJPEG 实时预览 · 环境上下文问答</text>
+
+  <rect x="678" y="308" width="466" height="56" rx="8" fill="#FFFFFF" stroke="#534AB7" stroke-width="0.5"/>
+  <text x="694" y="332" font-size="14" font-weight="600" fill="#26215C">自研二进制 TCP 协议 :8081</text>
+  <text x="694" y="352" font-size="12" fill="#5F5E5A">帧 = 2B 长度 + 2B 类型 + 包体（大端）</text>
+
+  <path d="M400 398 L400 382" fill="none" stroke="#5F5E5A" stroke-width="1.4" marker-start="url(#dn)" marker-end="url(#up)"/>
+  <path d="M900 398 L900 382" fill="none" stroke="#5F5E5A" stroke-width="1.4" marker-start="url(#dn)" marker-end="url(#up)"/>
+
+  <rect x="40" y="400" width="1120" height="160" rx="16" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+  <rect x="56" y="416" width="120" height="128" rx="10" fill="#0F6E56"/>
+  <text x="116" y="465" font-size="16" font-weight="600" fill="#FFFFFF" text-anchor="middle">边缘层</text>
+  <text x="116" y="488" font-size="11" fill="#9FE1CB" text-anchor="middle">SC171 V3</text>
+
+  <rect x="196" y="416" width="305" height="56" rx="8" fill="#FFFFFF" stroke="#0F6E56" stroke-width="0.5"/>
+  <text x="212" y="440" font-size="14" font-weight="600" fill="#04342C">传感器采集与融合</text>
+  <text x="212" y="460" font-size="12" fill="#5F5E5A">13 字节记录 · 类型码映射</text>
+
+  <rect x="517" y="416" width="305" height="56" rx="8" fill="#FFFFFF" stroke="#0F6E56" stroke-width="0.5"/>
+  <text x="533" y="440" font-size="14" font-weight="600" fill="#04342C">视觉姿态检测</text>
+  <text x="533" y="460" font-size="12" fill="#5F5E5A">人体关键点 · 跌倒判定</text>
+
+  <rect x="838" y="416" width="305" height="56" rx="8" fill="#FFFFFF" stroke="#0F6E56" stroke-width="0.5"/>
+  <text x="854" y="440" font-size="14" font-weight="600" fill="#04342C">语音前处理</text>
+  <text x="854" y="460" font-size="12" fill="#5F5E5A">唤醒 · 波束成形 · 降噪</text>
+
+  <rect x="196" y="488" width="466" height="56" rx="8" fill="#FFFFFF" stroke="#0F6E56" stroke-width="0.5"/>
+  <text x="212" y="512" font-size="14" font-weight="600" fill="#04342C">小智 MCP 桥接　sc171_bridge.py</text>
+  <text x="212" y="532" font-size="12" fill="#5F5E5A">板端 HTTP :8765 · 环境读取 · 拍照 · 音量</text>
+
+  <rect x="678" y="488" width="466" height="56" rx="8" fill="#FFFFFF" stroke="#0F6E56" stroke-width="0.5"/>
+  <text x="694" y="512" font-size="14" font-weight="600" fill="#04342C">端侧小模型推理　Fibo AI Stack</text>
+  <text x="694" y="532" font-size="12" fill="#5F5E5A">0.6–1.7B LLM · ASR/TTS · NPU 加速</text>
+
+  <path d="M400 578 L400 562" fill="none" stroke="#5F5E5A" stroke-width="1.4" marker-start="url(#dn)" marker-end="url(#up)"/>
+  <path d="M900 578 L900 562" fill="none" stroke="#5F5E5A" stroke-width="1.4" marker-start="url(#dn)" marker-end="url(#up)"/>
+  <text x="412" y="390" font-size="12" font-weight="600" fill="#0F6E56">端云协同：按意图分流 · 网络异常时降级本地</text>
+
+  <rect x="40" y="580" width="1120" height="200" rx="16" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.5"/>
+  <rect x="56" y="596" width="120" height="168" rx="10" fill="#854F0B"/>
+  <text x="116" y="672" font-size="16" font-weight="600" fill="#FFFFFF" text-anchor="middle">感知层</text>
+  <text x="116" y="695" font-size="11" fill="#FAC775" text-anchor="middle">Sensing</text>
+
+  <rect x="196" y="596" width="228" height="76" rx="8" fill="#FFFFFF" stroke="#854F0B" stroke-width="0.5"/>
+  <text x="212" y="626" font-size="14" font-weight="600" fill="#412402">温湿度</text>
+  <text x="212" y="646" font-size="12" fill="#5F5E5A">SHT40 · I²C</text>
+  <text x="212" y="664" font-size="12" fill="#5F5E5A">±0.2°C / ±1.8%RH</text>
+
+  <rect x="436" y="596" width="228" height="76" rx="8" fill="#FFFFFF" stroke="#854F0B" stroke-width="0.5"/>
+  <text x="452" y="626" font-size="14" font-weight="600" fill="#412402">光照强度</text>
+  <text x="452" y="646" font-size="12" fill="#5F5E5A">BH1750FVI · I²C</text>
+  <text x="452" y="664" font-size="12" fill="#5F5E5A">1 – 65535 lx</text>
+
+  <rect x="676" y="596" width="228" height="76" rx="8" fill="#FFFFFF" stroke="#854F0B" stroke-width="0.5"/>
+  <text x="692" y="626" font-size="14" font-weight="600" fill="#412402">空气质量 TVOC</text>
+  <text x="692" y="646" font-size="12" fill="#5F5E5A">SGP30 · I²C</text>
+  <text x="692" y="664" font-size="12" fill="#5F5E5A">0 – 60000 ppb</text>
+
+  <rect x="916" y="596" width="228" height="76" rx="8" fill="#FFFFFF" stroke="#854F0B" stroke-width="0.5"/>
+  <text x="932" y="626" font-size="14" font-weight="600" fill="#412402">二氧化碳</text>
+  <text x="932" y="646" font-size="12" fill="#5F5E5A">SCD41 · I²C（NDIR）</text>
+  <text x="932" y="664" font-size="12" fill="#5F5E5A">400 – 5000 ppm</text>
+
+  <rect x="196" y="688" width="228" height="76" rx="8" fill="#FFFFFF" stroke="#854F0B" stroke-width="0.5"/>
+  <text x="212" y="718" font-size="14" font-weight="600" fill="#412402">PM2.5</text>
+  <text x="212" y="738" font-size="12" fill="#5F5E5A">PMS5003 · UART</text>
+  <text x="212" y="756" font-size="12" fill="#5F5E5A">0 – 1000 µg/m³</text>
+
+  <rect x="436" y="688" width="228" height="76" rx="8" fill="#FFFFFF" stroke="#854F0B" stroke-width="0.5"/>
+  <text x="452" y="718" font-size="14" font-weight="600" fill="#412402">红外接近</text>
+  <text x="452" y="738" font-size="12" fill="#5F5E5A">APDS-9960 · I²C</text>
+  <text x="452" y="756" font-size="12" fill="#5F5E5A">0 – 100 mm</text>
+
+  <rect x="676" y="688" width="228" height="76" rx="8" fill="#FFFFFF" stroke="#854F0B" stroke-width="0.5"/>
+  <text x="692" y="718" font-size="14" font-weight="600" fill="#412402">毫米波雷达</text>
+  <text x="692" y="738" font-size="12" fill="#5F5E5A">LD2410C + MR60BHA1</text>
+  <text x="692" y="756" font-size="12" fill="#5F5E5A">存在 · 距离 · 呼吸 · 心率</text>
+
+  <rect x="916" y="688" width="228" height="76" rx="8" fill="#FFFFFF" stroke="#854F0B" stroke-width="0.5"/>
+  <text x="932" y="718" font-size="14" font-weight="600" fill="#412402">摄像头 · 麦克风阵列</text>
+  <text x="932" y="738" font-size="12" fill="#5F5E5A">IMX219/415 · MIPI-CSI</text>
+  <text x="932" y="756" font-size="12" fill="#5F5E5A">INMP441 × 4 · I²S</text>
+</svg>
