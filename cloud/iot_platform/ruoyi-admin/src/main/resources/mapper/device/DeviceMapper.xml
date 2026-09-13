@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.web.mapper.DeviceMapper">
+
+    <resultMap type="Device" id="DeviceResult">
+        <id     property="id"          column="id"           />
+        <result property="did"         column="did"          />
+        <result property="name"        column="name"         />
+        <result property="deviceTypeId" column="device_type_id" />
+        <result property="typeName"    column="type_name"    />
+        <result property="online"      column="online"       />
+        <result property="ip"          column="ip"           />
+        <result property="port"        column="port"         />
+        <result property="content"     column="content"      />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"  column="create_time"  />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"  column="update_time"  />
+        <result property="remark"      column="remark"       />
+    </resultMap>
+
+    <sql id="selectDeviceVo">
+        select d.id, d.did, d.name, d.device_type_id, t.name as type_name, d.online, d.ip, d.port, d.content,
+               d.create_by, d.create_time, d.update_by, d.update_time, d.remark
+        from s_device d
+        left join s_device_type t on d.device_type_id = t.id
+    </sql>
+
+    <select id="selectDeviceById" parameterType="Long" resultMap="DeviceResult">
+        <include refid="selectDeviceVo"/>
+        where d.id = #{id}
+    </select>
+
+    <select id="selectDeviceList" parameterType="Device" resultMap="DeviceResult">
+        <include refid="selectDeviceVo"/>
+        <where>
+            <if test="did != null and did != ''">
+                AND d.did like concat('%', #{did}, '%')
+            </if>
+            <if test="name != null and name != ''">
+                AND d.name like concat('%', #{name}, '%')
+            </if>
+            <if test="deviceTypeId != null">
+                AND d.device_type_id = #{deviceTypeId}
+            </if>
+            <if test="online != null">
+                AND d.online = #{online}
+            </if>
+        </where>
+        order by d.id desc
+    </select>
+
+    <select id="selectDeviceByDid" resultMap="DeviceResult">
+        <include refid="selectDeviceVo"/>
+        where d.did = #{did} limit 1
+    </select>
+
+    <select id="selectDeviceByName" resultMap="DeviceResult">
+        <include refid="selectDeviceVo"/>
+        where d.name = #{name} limit 1
+    </select>
+
+    <update id="updateOnlineInfoByDid">
+        update s_device
+        set online = #{online},
+            ip = #{ip},
+            port = #{port},
+            update_time = sysdate()
+        where did = #{did}
+    </update>
+
+    <update id="resetAllDevicesOnlineLoginInfo">
+        update s_device
+        set online = 0,
+            ip = null,
+            port = null,
+            update_time = sysdate()
+    </update>
+
+    <insert id="insertDevice" parameterType="Device" useGeneratedKeys="true" keyProperty="id">
+        insert into s_device(
+            <if test="did != null and did != ''">did,</if>
+            <if test="name != null and name != ''">name,</if>
+            device_type_id,
+            <if test="online != null">online,</if>
+            <if test="ip != null and ip != ''">ip,</if>
+            <if test="port != null">port,</if>
+            <if test="content != null and content != ''">content,</if>
+            <if test="remark != null and remark != ''">remark,</if>
+            <if test="createBy != null and createBy != ''">create_by,</if>
+            create_time
+        )values(
+            <if test="did != null and did != ''">#{did},</if>
+            <if test="name != null and name != ''">#{name},</if>
+            #{deviceTypeId},
+            <if test="online != null">#{online},</if>
+            <if test="ip != null and ip != ''">#{ip},</if>
+            <if test="port != null">#{port},</if>
+            <if test="content != null and content != ''">#{content},</if>
+            <if test="remark != null and remark != ''">#{remark},</if>
+            <if test="createBy != null and createBy != ''">#{createBy},</if>
+            sysdate()
+        )
+    </insert>
+
+    <update id="updateDevice" parameterType="Device">
+        update s_device
+        <set>
+            <if test="did != null and did != ''">did = #{did},</if>
+            <if test="name != null and name != ''">name = #{name},</if>
+            device_type_id = #{deviceTypeId,jdbcType=BIGINT},
+            <if test="online != null">online = #{online},</if>
+            <if test="ip != null">ip = #{ip},</if>
+            <if test="port != null">port = #{port},</if>
+            <if test="content != null">content = #{content},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+            update_time = sysdate()
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteDeviceById" parameterType="Long">
+        delete from s_device where id = #{id}
+    </delete>
+
+    <delete id="deleteDeviceByIds" parameterType="Long">
+        delete from s_device where id in
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

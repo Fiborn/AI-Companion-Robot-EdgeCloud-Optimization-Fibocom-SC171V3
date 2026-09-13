@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.web.mapper.DeviceTypeMapper">
+
+    <resultMap type="DeviceType" id="DeviceTypeResult">
+        <id     property="id"          column="id"           />
+        <result property="name"        column="name"         />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"  column="create_time"  />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"  column="update_time"  />
+        <result property="remark"      column="remark"       />
+    </resultMap>
+
+    <sql id="selectDeviceTypeVo">
+        select id, name, create_by, create_time, update_by, update_time, remark
+        from s_device_type
+    </sql>
+
+    <select id="selectDeviceTypeById" parameterType="Long" resultMap="DeviceTypeResult">
+        <include refid="selectDeviceTypeVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectDeviceTypeList" parameterType="DeviceType" resultMap="DeviceTypeResult">
+        <include refid="selectDeviceTypeVo"/>
+        <where>
+            <if test="name != null and name != ''">
+                AND name like concat('%', #{name}, '%')
+            </if>
+        </where>
+        order by id desc
+    </select>
+
+    <select id="selectDeviceTypeByName" resultMap="DeviceTypeResult">
+        <include refid="selectDeviceTypeVo"/>
+        where name = #{name} limit 1
+    </select>
+
+    <insert id="insertDeviceType" parameterType="DeviceType" useGeneratedKeys="true" keyProperty="id">
+        insert into s_device_type(
+            <if test="name != null and name != ''">name,</if>
+            <if test="remark != null and remark != ''">remark,</if>
+            <if test="createBy != null and createBy != ''">create_by,</if>
+            create_time
+        )values(
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="remark != null and remark != ''">#{remark},</if>
+            <if test="createBy != null and createBy != ''">#{createBy},</if>
+            sysdate()
+        )
+    </insert>
+
+    <update id="updateDeviceType" parameterType="DeviceType">
+        update s_device_type
+        <set>
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+            update_time = sysdate()
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteDeviceTypeById" parameterType="Long">
+        delete from s_device_type where id = #{id}
+    </delete>
+
+    <delete id="deleteDeviceTypeByIds" parameterType="Long">
+        delete from s_device_type where id in
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

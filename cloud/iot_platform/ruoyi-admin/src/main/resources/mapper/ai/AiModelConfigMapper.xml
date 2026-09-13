@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.web.mapper.AiModelConfigMapper">
+
+    <resultMap type="AiModelConfig" id="AiModelConfigResult">
+        <id     property="id"           column="id"            />
+        <result property="name"         column="name"          />
+        <result property="provider"     column="provider"      />
+        <result property="baseUrl"      column="base_url"      />
+        <result property="apiKey"       column="api_key"       />
+        <result property="modelName"    column="model_name"    />
+        <result property="apiType"      column="api_type"      />
+        <result property="temperature"  column="temperature"   />
+        <result property="maxTokens"    column="max_tokens"    />
+        <result property="systemPrompt" column="system_prompt" />
+        <result property="enabled"      column="enabled"       />
+        <result property="active"       column="active"        />
+        <result property="createBy"     column="create_by"     />
+        <result property="createTime"   column="create_time"   />
+        <result property="updateBy"     column="update_by"     />
+        <result property="updateTime"   column="update_time"   />
+        <result property="remark"       column="remark"        />
+    </resultMap>
+
+    <sql id="selectAiModelConfigVo">
+        select id, name, provider, base_url, api_key, model_name, api_type, temperature, max_tokens,
+               system_prompt, enabled, active, create_by, create_time, update_by, update_time, remark
+        from s_ai_model_config
+    </sql>
+
+    <select id="selectAiModelConfigById" parameterType="Long" resultMap="AiModelConfigResult">
+        <include refid="selectAiModelConfigVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectAiModelConfigByName" resultMap="AiModelConfigResult">
+        <include refid="selectAiModelConfigVo"/>
+        where name = #{name} limit 1
+    </select>
+
+    <select id="selectActiveAiModelConfig" resultMap="AiModelConfigResult">
+        <include refid="selectAiModelConfigVo"/>
+        where active = 1 and enabled = 1
+        order by id desc
+        limit 1
+    </select>
+
+    <select id="selectAiModelConfigList" parameterType="AiModelConfig" resultMap="AiModelConfigResult">
+        <include refid="selectAiModelConfigVo"/>
+        <where>
+            <if test="name != null and name != ''">
+                AND name like concat('%', #{name}, '%')
+            </if>
+            <if test="provider != null and provider != ''">
+                AND provider = #{provider}
+            </if>
+            <if test="modelName != null and modelName != ''">
+                AND model_name like concat('%', #{modelName}, '%')
+            </if>
+            <if test="enabled != null">
+                AND enabled = #{enabled}
+            </if>
+            <if test="active != null">
+                AND active = #{active}
+            </if>
+        </where>
+        order by active desc, id desc
+    </select>
+
+    <insert id="insertAiModelConfig" parameterType="AiModelConfig" useGeneratedKeys="true" keyProperty="id">
+        insert into s_ai_model_config(
+            name, provider, base_url,
+            <if test="apiKey != null and apiKey != ''">api_key,</if>
+            model_name, api_type, temperature, max_tokens,
+            <if test="systemPrompt != null and systemPrompt != ''">system_prompt,</if>
+            enabled, active,
+            <if test="remark != null and remark != ''">remark,</if>
+            <if test="createBy != null and createBy != ''">create_by,</if>
+            create_time
+        )values(
+            #{name}, #{provider}, #{baseUrl},
+            <if test="apiKey != null and apiKey != ''">#{apiKey},</if>
+            #{modelName}, #{apiType}, #{temperature}, #{maxTokens},
+            <if test="systemPrompt != null and systemPrompt != ''">#{systemPrompt},</if>
+            #{enabled}, #{active},
+            <if test="remark != null and remark != ''">#{remark},</if>
+            <if test="createBy != null and createBy != ''">#{createBy},</if>
+            sysdate()
+        )
+    </insert>
+
+    <update id="updateAiModelConfig" parameterType="AiModelConfig">
+        update s_ai_model_config
+        <set>
+            name = #{name},
+            provider = #{provider},
+            base_url = #{baseUrl},
+            <if test="apiKey != null">api_key = #{apiKey},</if>
+            model_name = #{modelName},
+            api_type = #{apiType},
+            temperature = #{temperature},
+            max_tokens = #{maxTokens},
+            <if test="systemPrompt != null">system_prompt = #{systemPrompt},</if>
+            enabled = #{enabled},
+            active = #{active},
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+            update_time = sysdate()
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="clearActiveAiModelConfig">
+        update s_ai_model_config set active = 0, update_time = sysdate()
+    </update>
+
+    <update id="setActiveAiModelConfig">
+        update s_ai_model_config set active = 1, update_time = sysdate() where id = #{id}
+    </update>
+
+    <delete id="deleteAiModelConfigById" parameterType="Long">
+        delete from s_ai_model_config where id = #{id}
+    </delete>
+
+    <delete id="deleteAiModelConfigByIds" parameterType="Long">
+        delete from s_ai_model_config where id in
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
