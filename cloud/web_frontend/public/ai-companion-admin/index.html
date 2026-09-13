@@ -1,0 +1,1988 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI桌面伴侣后台</title>
+  <style>
+    :root {
+      --primary: #4080ff;
+      --primary-soft: #edf4ff;
+      --sidebar: #26394d;
+      --page: #f5f7fb;
+      --card: #ffffff;
+      --text: #1f2d3d;
+      --muted: #7d8ba0;
+      --line: #e7edf6;
+      --success: #2fb86f;
+      --warn: #f59e0b;
+      --danger: #f05b5b;
+      --cyan: #18bfc0;
+      --shadow: 0 8px 22px rgba(38, 57, 77, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-width: 1180px;
+      color: var(--text);
+      background: var(--page);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+      font-size: 14px;
+    }
+
+    .sidebar {
+      position: fixed;
+      inset: 0 auto 0 0;
+      width: 60px;
+      background: var(--sidebar);
+      box-shadow: 8px 0 18px rgba(31, 45, 61, 0.08);
+      z-index: 10;
+    }
+
+    .brand {
+      height: 54px;
+      display: grid;
+      place-items: center;
+      color: #35e0be;
+    }
+
+    .side-nav {
+      padding-top: 8px;
+    }
+
+    .side-item {
+      width: 60px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      position: relative;
+      color: #a9b8c8;
+      text-decoration: none;
+    }
+
+    .side-item.active {
+      color: #ffffff;
+      background: rgba(64, 128, 255, 0.16);
+    }
+
+    .side-item.active::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 10px;
+      width: 4px;
+      height: 26px;
+      border-radius: 0 4px 4px 0;
+      background: #2f80ff;
+    }
+
+    .shell {
+      min-height: 100vh;
+      margin-left: 60px;
+      width: calc(100% - 60px);
+    }
+
+    .topbar {
+      height: 54px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 26px 0 24px;
+      background: #ffffff;
+      border-bottom: 1px solid #dfe6f0;
+      position: sticky;
+      top: 0;
+      z-index: 5;
+    }
+
+    .breadcrumb,
+    .toolbar,
+    .user {
+      display: flex;
+      align-items: center;
+    }
+
+    .breadcrumb {
+      gap: 18px;
+      color: #8b98aa;
+    }
+
+    .breadcrumb strong {
+      color: #73859a;
+      font-weight: 500;
+    }
+
+    .toolbar {
+      gap: 18px;
+      color: #5f7185;
+    }
+
+    .user {
+      gap: 8px;
+      color: #34495e;
+      white-space: nowrap;
+    }
+
+    .avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, #e8f3ff, #d4f7ef);
+      border: 1px solid #dde7f2;
+    }
+
+    .tabs {
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #ffffff;
+      border-bottom: 1px solid #dfe6f0;
+    }
+
+    .tab-left,
+    .tab-actions,
+    .tab {
+      display: flex;
+      align-items: center;
+    }
+
+    .collapse {
+      width: 26px;
+      text-align: center;
+      color: #bdc7d4;
+      border-right: 1px solid #edf1f7;
+    }
+
+    .tab {
+      height: 26px;
+      gap: 6px;
+      margin-left: 6px;
+      padding: 0 11px;
+      border-radius: 4px;
+      color: #ffffff;
+      background: var(--primary);
+    }
+
+    .tab-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #ffffff;
+    }
+
+    .tab-actions {
+      height: 100%;
+      color: #667789;
+      font-size: 13px;
+    }
+
+    .tab-action {
+      min-width: 34px;
+      height: 100%;
+      display: grid;
+      place-items: center;
+      padding: 0 10px;
+      border-left: 1px solid #edf1f7;
+    }
+
+    main {
+      padding: 22px 24px 28px;
+    }
+
+    .hero {
+      min-height: 126px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 28px 32px;
+      border-radius: 10px;
+      color: #ffffff;
+      background:
+        radial-gradient(circle at 76% 24%, rgba(255, 255, 255, 0.22), transparent 24%),
+        linear-gradient(135deg, #4080ff 0%, #6ba3ff 100%);
+      box-shadow: 0 8px 20px rgba(64, 128, 255, 0.22);
+    }
+
+    .hero h1 {
+      margin: 0 0 12px;
+      font-size: 28px;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+
+    .hero p {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.88);
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .button {
+      height: 32px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      padding: 0 14px;
+      border-radius: 5px;
+      border: 0;
+      color: #ffffff;
+      background: var(--primary);
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .button.ghost {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .ai-state {
+      width: 280px;
+      padding: 16px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(6px);
+    }
+
+    .ai-state-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .companion-face {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #ffffff;
+      color: var(--primary);
+    }
+
+    .ai-state b {
+      display: block;
+      margin-bottom: 3px;
+      font-size: 16px;
+    }
+
+    .ai-state span {
+      color: rgba(255, 255, 255, 0.82);
+      font-size: 12px;
+    }
+
+    .voice-bar {
+      height: 34px;
+      display: flex;
+      align-items: end;
+      gap: 6px;
+      padding: 6px 0 2px;
+    }
+
+    .voice-bar i {
+      width: 7px;
+      border-radius: 4px 4px 0 0;
+      background: rgba(255, 255, 255, 0.88);
+    }
+
+    .voice-bar i:nth-child(1) { height: 13px; }
+    .voice-bar i:nth-child(2) { height: 22px; }
+    .voice-bar i:nth-child(3) { height: 17px; }
+    .voice-bar i:nth-child(4) { height: 28px; }
+    .voice-bar i:nth-child(5) { height: 15px; }
+    .voice-bar i:nth-child(6) { height: 24px; }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 22px;
+    }
+
+    .metric-card,
+    .panel {
+      background: var(--card);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .metric-card {
+      min-height: 92px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 18px;
+    }
+
+    .metric-icon {
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      color: #ffffff;
+      flex: 0 0 auto;
+    }
+
+    .metric-icon.blue { background: linear-gradient(135deg, #4080ff, #6ba3ff); }
+    .metric-icon.green { background: linear-gradient(135deg, #2fb86f, #5fd695); }
+    .metric-icon.orange { background: linear-gradient(135deg, #f59e0b, #f7bf4f); }
+    .metric-icon.cyan { background: linear-gradient(135deg, #13b7bd, #20d2bd); }
+
+    .metric-card small {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--muted);
+    }
+
+    .metric-card strong {
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    .metric-card em {
+      margin-left: 6px;
+      color: var(--success);
+      font-size: 12px;
+      font-style: normal;
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 390px;
+      gap: 22px;
+      margin-top: 22px;
+      align-items: start;
+    }
+
+    .left-stack {
+      display: grid;
+      gap: 22px;
+    }
+
+    .panel {
+      padding: 20px;
+    }
+
+    .panel-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .panel-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0;
+      font-size: 17px;
+    }
+
+    .panel-tools {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .select-like,
+    .chip {
+      height: 28px;
+      display: inline-flex;
+      align-items: center;
+      border-radius: 5px;
+      background: #f6f8fc;
+      border: 1px solid var(--line);
+      padding: 0 10px;
+      color: #53677d;
+    }
+
+    .sensor-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .sensor-card {
+      min-height: 130px;
+      padding: 16px;
+      border-radius: 8px;
+      background: #fbfcff;
+      border: 1px solid #edf2fa;
+      position: relative;
+    }
+
+    .sensor-delete {
+      width: 24px;
+      height: 24px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: 5px;
+      color: #98a6b8;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .sensor-delete:hover {
+      color: var(--danger);
+      background: #fff0f0;
+    }
+
+    .sensor-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .sensor-name {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #4b5f75;
+      font-weight: 600;
+    }
+
+    .status {
+      height: 22px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 8px;
+      border-radius: 11px;
+      font-size: 12px;
+      color: var(--success);
+      background: #eaf8f1;
+    }
+
+    .status.warn {
+      color: var(--warn);
+      background: #fff6e5;
+    }
+
+    .status.danger {
+      color: var(--danger);
+      background: #fff0f0;
+    }
+
+    .sensor-value {
+      display: flex;
+      align-items: end;
+      gap: 4px;
+      margin-bottom: 10px;
+    }
+
+    .sensor-value strong {
+      font-size: 30px;
+      line-height: 1;
+    }
+
+    .sensor-value span,
+    .sensor-time {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .camera-panel {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 260px;
+      gap: 20px;
+      align-items: stretch;
+    }
+
+    .camera-stage {
+      min-height: 360px;
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      background:
+        linear-gradient(135deg, rgba(64, 128, 255, 0.18), rgba(24, 191, 192, 0.12)),
+        #142033;
+    }
+
+    .camera-feed {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 58% 35%, rgba(255, 255, 255, 0.2), transparent 8%),
+        linear-gradient(90deg, transparent 0 48%, rgba(255, 255, 255, 0.08) 49% 51%, transparent 52%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 38%),
+        repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.04) 0 1px, transparent 1px 90px),
+        repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.04) 0 1px, transparent 1px 68px);
+    }
+
+    .camera-feed::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 48%;
+      width: 128px;
+      height: 188px;
+      transform: translate(-50%, -50%);
+      border-radius: 60px 60px 34px 34px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.26), rgba(255, 255, 255, 0.08));
+      box-shadow: 0 0 42px rgba(64, 128, 255, 0.25);
+    }
+
+    .camera-feed::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 31%;
+      width: 76px;
+      height: 76px;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.28);
+      border: 2px solid rgba(255, 255, 255, 0.4);
+    }
+
+    .camera-overlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .detect-box {
+      position: absolute;
+      left: 42%;
+      top: 18%;
+      width: 18%;
+      height: 50%;
+      border: 2px solid #35e0be;
+      border-radius: 8px;
+      box-shadow: 0 0 0 999px rgba(8, 18, 32, 0.06);
+    }
+
+    .detect-box span {
+      position: absolute;
+      left: -2px;
+      top: -27px;
+      height: 24px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 8px;
+      border-radius: 5px 5px 0 0;
+      color: #082033;
+      background: #35e0be;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .pose-line {
+      position: absolute;
+      background: #ffd166;
+      transform-origin: left center;
+      height: 2px;
+    }
+
+    .pose-line.l1 { left: 49%; top: 35%; width: 70px; transform: rotate(33deg); }
+    .pose-line.l2 { left: 49%; top: 35%; width: 66px; transform: rotate(147deg); }
+    .pose-line.l3 { left: 50%; top: 44%; width: 72px; transform: rotate(75deg); }
+    .pose-line.l4 { left: 50%; top: 44%; width: 72px; transform: rotate(105deg); }
+
+    .camera-hud {
+      position: absolute;
+      left: 14px;
+      right: 14px;
+      top: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #ffffff;
+      font-size: 12px;
+      z-index: 1;
+    }
+
+    .rec-dot {
+      width: 8px;
+      height: 8px;
+      display: inline-block;
+      margin-right: 6px;
+      border-radius: 50%;
+      background: #f05b5b;
+      box-shadow: 0 0 0 4px rgba(240, 91, 91, 0.2);
+    }
+
+    .camera-bottom {
+      position: absolute;
+      left: 14px;
+      right: 14px;
+      bottom: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: rgba(255, 255, 255, 0.84);
+      font-size: 12px;
+      z-index: 1;
+    }
+
+    .camera-side {
+      display: grid;
+      gap: 12px;
+    }
+
+    .camera-stat {
+      padding: 14px;
+      border-radius: 8px;
+      background: #fbfcff;
+      border: 1px solid #edf2fa;
+    }
+
+    .camera-stat small {
+      display: block;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .camera-stat strong {
+      font-size: 18px;
+    }
+
+    .camera-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .chart-panel {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 240px;
+      gap: 22px;
+    }
+
+    .chart {
+      height: 246px;
+      position: relative;
+      border-radius: 8px;
+      background:
+        linear-gradient(#eef3fa 1px, transparent 1px) 0 0 / 100% 49px,
+        linear-gradient(90deg, #eef3fa 1px, transparent 1px) 0 0 / 80px 100%,
+        #fbfcff;
+      overflow: hidden;
+    }
+
+    .chart svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .chart-labels {
+      position: absolute;
+      inset: auto 12px 10px 12px;
+      display: flex;
+      justify-content: space-between;
+      color: #98a6b8;
+      font-size: 12px;
+    }
+
+    .alert-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .alert-item {
+      padding: 12px;
+      border-radius: 8px;
+      background: #fbfcff;
+      border-left: 3px solid var(--warn);
+    }
+
+    .alert-item.danger {
+      border-left-color: var(--danger);
+    }
+
+    .alert-item strong {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 13px;
+    }
+
+    .alert-item span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .chat-panel {
+      padding: 0;
+      overflow: hidden;
+      position: sticky;
+      top: 110px;
+    }
+
+    .chat-head {
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 18px;
+      border-bottom: 1px solid var(--line);
+      background: #fbfcff;
+    }
+
+    .chat-person {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .chat-face {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: #ffffff;
+      background: linear-gradient(135deg, #4080ff, #18bfc0);
+    }
+
+    .chat-person strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .online {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--success);
+      font-size: 12px;
+    }
+
+    .online::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--success);
+    }
+
+    .chat-body {
+      height: 430px;
+      padding: 18px;
+      overflow: hidden;
+      background: #ffffff;
+    }
+
+    .message {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .message.user {
+      justify-content: flex-end;
+    }
+
+    .bubble {
+      max-width: 282px;
+      padding: 11px 13px;
+      border-radius: 8px;
+      line-height: 1.6;
+      background: #f4f7fb;
+      color: #42566c;
+    }
+
+    .message.user .bubble {
+      color: #ffffff;
+      background: var(--primary);
+    }
+
+    .quick-prompts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding-top: 4px;
+    }
+
+    .prompt {
+      height: 28px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 10px;
+      border-radius: 14px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-size: 12px;
+      text-decoration: none;
+    }
+
+    .chat-input {
+      display: flex;
+      gap: 10px;
+      padding: 14px;
+      border-top: 1px solid var(--line);
+      background: #fbfcff;
+    }
+
+    .chat-input input {
+      min-width: 0;
+      flex: 1;
+      height: 36px;
+      border-radius: 5px;
+      border: 1px solid #dfe6f0;
+      padding: 0 12px;
+      outline: none;
+      color: #42566c;
+      font: inherit;
+    }
+
+    .modal-mask {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(23, 35, 49, 0.35);
+      z-index: 30;
+    }
+
+    .modal-mask.show {
+      display: flex;
+    }
+
+    .modal {
+      width: 520px;
+      border-radius: 8px;
+      background: #ffffff;
+      box-shadow: 0 22px 60px rgba(23, 35, 49, 0.24);
+      overflow: hidden;
+    }
+
+    .modal-head {
+      height: 54px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 18px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .modal-head h3 {
+      margin: 0;
+      font-size: 16px;
+    }
+
+    .modal-close {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: 5px;
+      background: transparent;
+      color: #8492a6;
+      cursor: pointer;
+    }
+
+    .modal-close:hover {
+      background: #f4f7fb;
+      color: #42566c;
+    }
+
+    .form {
+      display: grid;
+      gap: 14px;
+      padding: 18px;
+    }
+
+    .field {
+      display: grid;
+      gap: 7px;
+    }
+
+    .field label {
+      color: #53677d;
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    .field input,
+    .field select {
+      height: 36px;
+      border: 1px solid #dfe6f0;
+      border-radius: 5px;
+      padding: 0 10px;
+      color: #42566c;
+      font: inherit;
+      outline: none;
+      background: #ffffff;
+    }
+
+    .field input:focus,
+    .field select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(64, 128, 255, 0.12);
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      padding: 0 18px 18px;
+    }
+
+    .button.light {
+      color: #53677d;
+      background: #f4f7fb;
+    }
+
+    .sensor-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 12px;
+    }
+
+    .sensor-meta span {
+      height: 22px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 8px;
+      border-radius: 11px;
+      color: #53677d;
+      background: #eef3fa;
+      font-size: 12px;
+    }
+
+    .event-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    .event-table th,
+    .event-table td {
+      height: 42px;
+      border-bottom: 1px dashed var(--line);
+      text-align: left;
+      color: #53677d;
+    }
+
+    .event-table th {
+      color: #8492a6;
+      font-weight: 500;
+    }
+
+    .footer {
+      padding: 22px 0 4px;
+      text-align: center;
+      color: #7d8ba0;
+      font-size: 13px;
+    }
+
+    svg {
+      width: 20px;
+      height: 20px;
+      display: block;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .avatar svg,
+    .metric-icon svg,
+    .companion-face svg,
+    .chat-face svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    @media (max-width: 1320px) {
+      body {
+        min-width: 980px;
+      }
+
+      .ai-state {
+        display: none;
+      }
+
+      .metrics,
+      .sensor-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .camera-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .workspace {
+        grid-template-columns: 1fr;
+      }
+
+      .chat-panel {
+        position: static;
+      }
+    }
+
+    /* Dashboard polish */
+    main {
+      max-width: 1720px;
+      margin: 0 auto;
+    }
+
+    .hero {
+      min-height: 112px;
+      padding: 24px 28px;
+    }
+
+    .hero h1 {
+      font-size: 26px;
+      margin-bottom: 8px;
+    }
+
+    .hero-actions {
+      margin-top: 14px;
+    }
+
+    .metrics {
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .metric-card {
+      min-height: 82px;
+      padding: 15px 16px;
+    }
+
+    .metric-icon {
+      width: 42px;
+      height: 42px;
+    }
+
+    .metric-card strong {
+      font-size: 22px;
+    }
+
+    .workspace {
+      grid-template-columns: minmax(0, 1fr) 410px;
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .left-stack {
+      gap: 18px;
+    }
+
+    .panel {
+      padding: 18px;
+    }
+
+    .panel-head {
+      margin-bottom: 14px;
+    }
+
+    .camera-panel {
+      order: -1;
+      grid-template-columns: minmax(0, 1fr) 230px;
+      gap: 16px;
+    }
+
+    .camera-stage {
+      min-height: 300px;
+    }
+
+    .camera-stat {
+      padding: 12px;
+    }
+
+    .camera-actions {
+      gap: 8px;
+    }
+
+    .sensor-grid {
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      max-height: 378px;
+      overflow: auto;
+      padding-right: 4px;
+    }
+
+    .sensor-card {
+      min-height: 142px;
+      padding: 14px;
+    }
+
+    .sensor-top {
+      margin-bottom: 14px;
+    }
+
+    .sensor-value strong {
+      font-size: 26px;
+    }
+
+    .sensor-meta {
+      max-height: 52px;
+      overflow: hidden;
+    }
+
+    .chart {
+      height: 218px;
+    }
+
+    .chat-panel {
+      top: 104px;
+    }
+
+    .chat-head {
+      height: 64px;
+    }
+
+    .chat-body {
+      height: 396px;
+    }
+
+    .event-table th,
+    .event-table td {
+      height: 38px;
+    }
+
+    @media (max-width: 1320px) {
+      .workspace {
+        grid-template-columns: 1fr;
+      }
+
+      .chat-panel {
+        position: static;
+      }
+
+      .chat-body {
+        height: 330px;
+      }
+
+      .camera-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .sensor-grid {
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        max-height: 430px;
+      }
+    }
+
+    /* Visual refinement */
+    body {
+      background:
+        linear-gradient(180deg, #eef4ff 0, #f6f8fc 260px, #f5f7fb 100%);
+    }
+
+    .topbar,
+    .tabs {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 86% 24%, rgba(53, 224, 190, 0.28), transparent 25%),
+        radial-gradient(circle at 52% 0%, rgba(255, 255, 255, 0.24), transparent 28%),
+        linear-gradient(135deg, #3677f5 0%, #5c97ff 54%, #18bfc0 100%);
+      box-shadow: 0 18px 38px rgba(64, 128, 255, 0.22);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -50px -90px auto;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      border: 48px solid rgba(255, 255, 255, 0.09);
+      pointer-events: none;
+    }
+
+    .hero > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .panel,
+    .metric-card {
+      border: 1px solid rgba(226, 234, 246, 0.9);
+      box-shadow: 0 14px 34px rgba(38, 57, 77, 0.08);
+    }
+
+    .metric-card {
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+
+    .metric-card:hover,
+    .sensor-card:hover,
+    .camera-stat:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 32px rgba(38, 57, 77, 0.11);
+    }
+
+    .button {
+      box-shadow: 0 8px 16px rgba(64, 128, 255, 0.18);
+      transition: transform .16s ease, box-shadow .16s ease, background .16s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 22px rgba(64, 128, 255, 0.24);
+    }
+
+    .button.light {
+      box-shadow: none;
+    }
+
+    .camera-stage {
+      background:
+        radial-gradient(circle at 50% 35%, rgba(53, 224, 190, 0.16), transparent 18%),
+        linear-gradient(135deg, #101c2f 0%, #142a44 48%, #0e3e4a 100%);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08), 0 16px 28px rgba(20, 32, 51, 0.18);
+    }
+
+    .camera-stage::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(255,255,255,.06), transparent 20%, rgba(0,0,0,.16));
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .camera-hud,
+    .camera-bottom,
+    .camera-overlay {
+      z-index: 2;
+    }
+
+    .detect-box {
+      border-color: #35e0be;
+      box-shadow: 0 0 18px rgba(53, 224, 190, 0.24);
+    }
+
+    .pose-line {
+      box-shadow: 0 0 10px rgba(255, 209, 102, 0.5);
+    }
+
+    .sensor-grid::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .sensor-grid::-webkit-scrollbar-thumb {
+      border-radius: 8px;
+      background: #cbd7e8;
+    }
+
+    .sensor-grid::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .sensor-card,
+    .camera-stat,
+    .alert-item {
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    }
+
+    .sensor-card {
+      background: linear-gradient(180deg, #ffffff, #fbfcff);
+    }
+
+    .chat-panel {
+      border: 1px solid rgba(210, 224, 244, 0.95);
+    }
+
+    .chat-head {
+      background: linear-gradient(180deg, #ffffff, #f7faff);
+    }
+
+    .bubble {
+      box-shadow: 0 8px 18px rgba(38, 57, 77, 0.07);
+    }
+
+    .message.user .bubble {
+      background: linear-gradient(135deg, #4080ff, #5e9bff);
+    }
+
+    .prompt {
+      border: 1px solid #d8e7ff;
+      transition: background .16s ease, transform .16s ease;
+    }
+
+    .prompt:hover {
+      background: #e3efff;
+      transform: translateY(-1px);
+    }
+
+    .camera-feed {
+      z-index: 0;
+    }
+
+    .camera-overlay,
+    .camera-hud,
+    .camera-bottom {
+      position: absolute;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <div class="brand" title="AI桌面伴侣">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18c5-1 8-4 9-10"/><path d="M5 8c5 0 9 4 11 10"/><path d="M12 4c2 5 5 8 9 10"/></svg>
+    </div>
+    <nav class="side-nav" aria-label="主导航">
+      <a class="side-item active" title="首页" href="#"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 1 18 0"/><path d="M12 12 16 8"/><path d="M8 16h8"/></svg></a>
+      <a class="side-item" title="传感器" href="#"><svg viewBox="0 0 24 24"><path d="M4 19V5"/><path d="M4 19h16"/><path d="m7 15 3-4 4 3 5-7"/></svg></a>
+      <a class="side-item" title="AI对话" href="#"><svg viewBox="0 0 24 24"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4Z"/></svg></a>
+      <a class="side-item" title="模型配置" href="#"><svg viewBox="0 0 24 24"><rect x="5" y="6" width="14" height="12" rx="2"/><path d="M12 2v4"/><path d="M12 18v4"/><path d="M9 10h.01"/><path d="M15 10h.01"/></svg></a>
+      <a class="side-item" title="系统设置" href="#"><svg viewBox="0 0 24 24"><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.88-.34 1.7 1.7 0 0 0-1 1.55V21a2 2 0 1 1-4 0v-.08a1.7 1.7 0 0 0-1-1.55 1.7 1.7 0 0 0-1.88.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-1.55-1H3a2 2 0 1 1 0-4h.08a1.7 1.7 0 0 0 1.55-1 1.7 1.7 0 0 0-.34-1.88l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.7 1.7 0 0 0 9 4.6 1.7 1.7 0 0 0 10 3.05V3a2 2 0 1 1 4 0v.08a1.7 1.7 0 0 0 1 1.55 1.7 1.7 0 0 0 1.88-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.7 1.7 0 0 0 19.4 9c.17.58.72 1 1.55 1H21a2 2 0 1 1 0 4h-.08a1.7 1.7 0 0 0-1.52 1Z"/></svg></a>
+    </nav>
+  </div>
+
+  <div class="shell">
+    <header class="topbar">
+      <div class="breadcrumb">
+        <span>⌂</span>
+        <strong>首页</strong>
+      </div>
+      <div class="toolbar">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.1 9a3 3 0 1 1 5.8 1c-.5 1.4-2.1 1.7-2.6 2.7"/><path d="M12 17h.01"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M16 3h3a2 2 0 0 1 2 2v3"/><path d="M8 21H5a2 2 0 0 1-2-2v-3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 7h18s-3 0-3-7"/><path d="M10 19a2 2 0 0 0 4 0"/></svg>
+        <div class="user">
+          <span class="avatar"><svg viewBox="0 0 24 24"><path d="M8 10c0-2.2 1.8-4 4-4s4 1.8 4 4-1.8 4-4 4-4-1.8-4-4Z"/><path d="M5 21a7 7 0 0 1 14 0"/></svg></span>
+          <span>暖芯</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="tabs">
+      <div class="tab-left">
+        <div class="collapse">‹</div>
+        <div class="tab"><span class="tab-dot"></span>首页</div>
+      </div>
+      <div class="tab-actions">
+        <div class="tab-action">›</div>
+        <div class="tab-action">⌄</div>
+        <div class="tab-action">刷新</div>
+      </div>
+    </div>
+
+    <main>
+      <section class="hero">
+        <div>
+          <h1 id="greeting">欢迎使用管理系统 😊</h1>
+          <p>实时查看传感器、设备健康、告警事件，并直接让 AI 分析当前环境和设备状态。</p>
+          <div class="hero-actions">
+            <a class="button ghost" href="#">查看实时数据</a>
+            <a class="button ghost" href="#">生成环境报告</a>
+          </div>
+        </div>
+        <div class="ai-state">
+          <div class="ai-state-top">
+            <div class="companion-face"><svg viewBox="0 0 24 24"><rect x="5" y="6" width="14" height="12" rx="2"/><path d="M9 11h.01"/><path d="M15 11h.01"/><path d="M9 15h6"/><path d="M12 2v4"/></svg></div>
+            <div>
+              <b>小暖在线</b>
+              <span>聆听中 · 模型响应 248ms</span>
+            </div>
+          </div>
+          <div class="voice-bar" aria-label="语音输入波形"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+      </section>
+
+      <section class="metrics" aria-label="状态概览">
+        <article class="metric-card">
+          <div class="metric-icon blue"><svg viewBox="0 0 24 24"><path d="M4 19V5"/><path d="M4 19h16"/><path d="m7 15 3-4 4 3 5-7"/></svg></div>
+          <div><small>在线传感器</small><strong>8 / 9</strong><em>正常</em></div>
+        </article>
+        <article class="metric-card">
+          <div class="metric-icon green"><svg viewBox="0 0 24 24"><rect x="5" y="6" width="14" height="12" rx="2"/><path d="M9 10h.01"/><path d="M15 10h.01"/><path d="M9 14h6"/></svg></div>
+          <div><small>边缘算力</small><strong>72%</strong><em>稳定</em></div>
+        </article>
+        <article class="metric-card">
+          <div class="metric-icon orange"><svg viewBox="0 0 24 24"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></div>
+          <div><small>待处理告警</small><strong>3</strong><em style="color:var(--warn)">需查看</em></div>
+        </article>
+        <article class="metric-card">
+          <div class="metric-icon cyan"><svg viewBox="0 0 24 24"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4Z"/></svg></div>
+          <div><small>今日对话</small><strong>36</strong><em>+12%</em></div>
+        </article>
+      </section>
+
+      <section class="workspace">
+        <div class="left-stack">
+          <div class="panel">
+            <div class="panel-head">
+              <h2 class="panel-title"><svg viewBox="0 0 24 24"><path d="M4 14a8 8 0 1 1 16 0"/><path d="M12 14 16 9"/><path d="M8 18h8"/></svg>传感器实时监控</h2>
+              <div class="panel-tools">
+                <span class="select-like">桌面伴侣主机 A01</span>
+                <span class="chip">5秒刷新</span>
+                <button class="button" id="addSensorBtn" type="button">添加传感器</button>
+              </div>
+            </div>
+            <div class="sensor-grid" id="sensorGrid"></div>
+          </div>
+
+          <div class="panel camera-panel">
+            <div>
+              <div class="panel-head">
+                <h2 class="panel-title"><svg viewBox="0 0 24 24"><path d="M15 10 20 7v10l-5-3Z"/><rect x="3" y="6" width="12" height="12" rx="2"/></svg>摄像头实时预览</h2>
+                <div class="panel-tools">
+                  <span class="chip">Camera / MIPI-CSI</span>
+                  <span class="chip">姿态检测</span>
+                </div>
+              </div>
+              <div class="camera-stage" id="cameraStage">
+                <div class="camera-feed"></div>
+                <div class="camera-overlay">
+                  <div class="detect-box"><span>Person 96%</span></div>
+                  <i class="pose-line l1"></i>
+                  <i class="pose-line l2"></i>
+                  <i class="pose-line l3"></i>
+                  <i class="pose-line l4"></i>
+                </div>
+                <div class="camera-hud">
+                  <span><i class="rec-dot"></i>LIVE</span>
+                  <span id="cameraClock">00:00:00</span>
+                </div>
+                <div class="camera-bottom">
+                  <span>1920×1080 · 30fps</span>
+                  <span>边缘推理：SC171 NPU</span>
+                </div>
+              </div>
+            </div>
+            <div class="camera-side">
+              <div class="camera-stat">
+                <small>画面状态</small>
+                <strong id="cameraState">实时预览中</strong>
+              </div>
+              <div class="camera-stat">
+                <small>检测目标</small>
+                <strong>1 人 · 坐姿</strong>
+              </div>
+              <div class="camera-stat">
+                <small>延迟</small>
+                <strong>82ms</strong>
+              </div>
+              <div class="camera-actions">
+                <button class="button" id="cameraToggle" type="button">暂停</button>
+                <button class="button light" id="cameraSnapshot" type="button">抓拍</button>
+                <button class="button light" id="cameraFullscreen" type="button">全屏</button>
+                <button class="button light" type="button">配置</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel chart-panel">
+            <div>
+              <div class="panel-head">
+                <h2 class="panel-title"><svg viewBox="0 0 24 24"><path d="M4 19V5"/><path d="M4 19h16"/><path d="m7 15 3-4 4 3 5-7"/></svg>环境趋势</h2>
+                <div class="panel-tools"><span class="chip">最近1小时</span><span class="chip">温度 / 噪声</span></div>
+              </div>
+              <div class="chart" aria-label="环境趋势图">
+                <svg viewBox="0 0 720 246" preserveAspectRatio="none">
+                  <path d="M0 145 C80 132 110 124 170 132 C230 142 270 107 340 114 C420 122 460 96 520 104 C600 113 640 84 720 92" stroke="#4080ff" stroke-width="4" fill="none"/>
+                  <path d="M0 176 C80 174 120 167 180 160 C245 152 300 166 360 148 C430 128 482 154 536 132 C610 103 650 126 720 116" stroke="#f59e0b" stroke-width="4" fill="none"/>
+                  <path d="M0 145 C80 132 110 124 170 132 C230 142 270 107 340 114 C420 122 460 96 520 104 C600 113 640 84 720 92 L720 246 L0 246Z" fill="rgba(64,128,255,.08)"/>
+                </svg>
+                <div class="chart-labels"><span>16:00</span><span>16:15</span><span>16:30</span><span>16:45</span><span>17:00</span></div>
+              </div>
+            </div>
+            <div>
+              <div class="panel-head">
+                <h2 class="panel-title"><svg viewBox="0 0 24 24"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>告警</h2>
+              </div>
+              <div class="alert-list">
+                <div class="alert-item"><strong>噪声连续 3 分钟偏高</strong><span>建议询问 AI 分析来源</span></div>
+                <div class="alert-item danger"><strong>麦克风阵列 2 延迟异常</strong><span>平均延迟 182ms</span></div>
+                <div class="alert-item"><strong>光照低于专注模式阈值</strong><span>可自动打开柔光灯</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head">
+              <h2 class="panel-title"><svg viewBox="0 0 24 24"><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M3 6h.01"/><path d="M3 12h.01"/><path d="M3 18h.01"/></svg>最近事件</h2>
+              <div class="panel-tools"><span class="chip">全部设备</span></div>
+            </div>
+            <table class="event-table">
+              <thead><tr><th>时间</th><th>事件</th><th>来源</th><th>处理状态</th></tr></thead>
+              <tbody>
+                <tr><td>16:42:19</td><td>噪声超过 60dB</td><td>环境传感器</td><td><span class="status warn">待确认</span></td></tr>
+                <tr><td>16:38:04</td><td>用户询问“当前环境怎么样”</td><td>AI对话</td><td><span class="status">已回复</span></td></tr>
+                <tr><td>16:31:26</td><td>人体存在状态变更</td><td>PIR传感器</td><td><span class="status">已记录</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <aside class="panel chat-panel">
+          <div class="chat-head">
+            <div class="chat-person">
+              <div class="chat-face"><svg viewBox="0 0 24 24"><rect x="5" y="6" width="14" height="12" rx="2"/><path d="M9 11h.01"/><path d="M15 11h.01"/><path d="M9 15h6"/></svg></div>
+              <div>
+                <strong>小暖 · AI桌面伴侣</strong>
+                <span class="online">在线聆听</span>
+              </div>
+            </div>
+            <span class="chip">上下文已接入传感器</span>
+          </div>
+          <div class="chat-body">
+            <div class="message">
+              <div class="bubble">我检测到噪声在最近 3 分钟持续偏高，温湿度正常，光照略低。需要我帮你分析可能原因吗？</div>
+            </div>
+            <div class="message user">
+              <div class="bubble">总结一下当前桌面环境。</div>
+            </div>
+            <div class="message">
+              <div class="bubble">当前温度 26.4°C、湿度 58%、光照 430lux，适合办公。噪声 64dB 偏高，可能影响语音唤醒和专注体验。</div>
+            </div>
+            <div class="quick-prompts">
+              <a class="prompt" href="#">分析异常</a>
+              <a class="prompt" href="#">生成日报</a>
+              <a class="prompt" href="#">打开安静模式</a>
+              <a class="prompt" href="#">检查设备连接</a>
+            </div>
+          </div>
+          <div class="chat-input">
+            <input type="text" value="请分析噪声偏高的可能原因">
+            <button class="button">发送</button>
+          </div>
+        </aside>
+      </section>
+
+      <footer class="footer">当前版本：v3.9.2</footer>
+    </main>
+  </div>
+
+  <div class="modal-mask" id="sensorModal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="sensorModalTitle">
+      <div class="modal-head">
+        <h3 id="sensorModalTitle">添加传感器</h3>
+        <button class="modal-close" id="closeSensorModal" type="button" aria-label="关闭">×</button>
+      </div>
+      <form id="sensorForm">
+        <div class="form">
+          <div class="field">
+            <label for="sensorName">传感器名称</label>
+            <input id="sensorName" name="name" type="text" placeholder="例如：人体存在" required>
+          </div>
+          <div class="field">
+            <label for="sensorValue">当前数值</label>
+            <input id="sensorValue" name="value" type="text" placeholder="例如：1 或 25.8" required>
+          </div>
+          <div class="field">
+            <label for="sensorUnit">单位</label>
+            <input id="sensorUnit" name="unit" type="text" placeholder="例如：°C、%RH、lux、dB">
+          </div>
+          <div class="field">
+            <label for="sensorStatus">状态</label>
+            <select id="sensorStatus" name="status">
+              <option value="normal">正常</option>
+              <option value="warn">偏高/偏低</option>
+              <option value="danger">异常</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button class="button light" id="cancelSensor" type="button">取消</button>
+          <button class="button" type="submit">保存</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const greeting = document.getElementById('greeting');
+    const hour = new Date().getHours();
+    let text = '晚上好';
+    if (hour >= 6 && hour < 12) text = '早上好';
+    if (hour >= 12 && hour < 14) text = '中午好';
+    if (hour >= 14 && hour < 18) text = '下午好';
+    if (hour >= 0 && hour < 6) text = '夜深了';
+    greeting.textContent = `${text}，欢迎使用管理系统 😊`;
+
+    const sensorIcons = {
+      temperature: '<path d="M14 14.8V5a2 2 0 1 0-4 0v9.8a4 4 0 1 0 4 0Z"/>',
+      humidity: '<path d="M12 2s7 7.1 7 12a7 7 0 1 1-14 0c0-4.9 7-12 7-12Z"/>',
+      light: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/>',
+      noise: '<path d="M4 12h2"/><path d="M8 8v8"/><path d="M12 5v14"/><path d="M16 9v6"/><path d="M20 12h-2"/>',
+      default: '<path d="M4 14a8 8 0 1 1 16 0"/><path d="M12 14 16 9"/><path d="M8 18h8"/>'
+    };
+
+    const defaultSensors = [
+      { id: 'temperature', name: '温度', value: '26.4', unit: '°C', status: 'normal', icon: 'temperature', updatedAt: '16:42:18' },
+      { id: 'humidity', name: '湿度', value: '58', unit: '%RH', status: 'normal', icon: 'humidity', updatedAt: '16:42:16' },
+      { id: 'light', name: '光照', value: '430', unit: 'lux', status: 'normal', icon: 'light', updatedAt: '16:42:15' },
+      { id: 'noise', name: '噪声', value: '64', unit: 'dB', status: 'warn', icon: 'noise', updatedAt: '16:42:19' }
+    ];
+
+    const storageKey = 'ai-companion-sensors';
+    const sensorGrid = document.getElementById('sensorGrid');
+    const sensorModal = document.getElementById('sensorModal');
+    const sensorForm = document.getElementById('sensorForm');
+    const addSensorBtn = document.getElementById('addSensorBtn');
+    const closeSensorModal = document.getElementById('closeSensorModal');
+    const cancelSensor = document.getElementById('cancelSensor');
+
+    let sensors = JSON.parse(localStorage.getItem(storageKey) || 'null') || defaultSensors;
+
+    function saveSensors() {
+      localStorage.setItem(storageKey, JSON.stringify(sensors));
+    }
+
+    function statusText(status) {
+      return status === 'danger' ? '异常' : status === 'warn' ? '偏高' : '正常';
+    }
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, (char) => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+      }[char]));
+    }
+
+    function renderSensors() {
+      sensorGrid.innerHTML = sensors.map((sensor) => `
+        <article class="sensor-card" data-id="${escapeHtml(sensor.id)}">
+          <div class="sensor-top">
+            <span class="sensor-name">
+              <svg viewBox="0 0 24 24">${sensorIcons[sensor.icon] || sensorIcons.default}</svg>
+              ${escapeHtml(sensor.name)}
+            </span>
+            <button class="sensor-delete" type="button" title="删除传感器" aria-label="删除 ${escapeHtml(sensor.name)}">×</button>
+          </div>
+          <div class="sensor-value"><strong>${escapeHtml(sensor.value)}</strong><span>${escapeHtml(sensor.unit || '')}</span></div>
+          <div class="sensor-time">
+            <span class="status ${sensor.status === 'normal' ? '' : sensor.status}">${statusText(sensor.status)}</span>
+            更新于 ${escapeHtml(sensor.updatedAt)}
+          </div>
+        </article>
+      `).join('');
+    }
+
+    function openSensorModal() {
+      sensorForm.reset();
+      sensorModal.classList.add('show');
+      sensorModal.setAttribute('aria-hidden', 'false');
+      document.getElementById('sensorName').focus();
+    }
+
+    function closeModal() {
+      sensorModal.classList.remove('show');
+      sensorModal.setAttribute('aria-hidden', 'true');
+    }
+
+    addSensorBtn.addEventListener('click', openSensorModal);
+    closeSensorModal.addEventListener('click', closeModal);
+    cancelSensor.addEventListener('click', closeModal);
+    sensorModal.addEventListener('click', (event) => {
+      if (event.target === sensorModal) closeModal();
+    });
+
+    sensorForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const formData = new FormData(sensorForm);
+      const now = new Date();
+      sensors.push({
+        id: `sensor-${Date.now()}`,
+        name: formData.get('name').trim(),
+        value: formData.get('value').trim(),
+        unit: formData.get('unit').trim(),
+        status: formData.get('status'),
+        icon: 'default',
+        updatedAt: now.toLocaleTimeString('zh-CN', { hour12: false })
+      });
+      saveSensors();
+      renderSensors();
+      closeModal();
+    });
+
+    sensorGrid.addEventListener('click', (event) => {
+      const deleteButton = event.target.closest('.sensor-delete');
+      if (!deleteButton) return;
+      const card = deleteButton.closest('.sensor-card');
+      sensors = sensors.filter((sensor) => sensor.id !== card.dataset.id);
+      saveSensors();
+      renderSensors();
+    });
+
+    renderSensors();
+  </script>
+  <script>
+    (() => {
+      const grid = document.getElementById('sensorGrid');
+      const modal = document.getElementById('sensorModal');
+      const addButton = document.getElementById('addSensorBtn');
+      const modalTitle = document.getElementById('sensorModalTitle');
+      const closeButton = document.getElementById('closeSensorModal');
+      const cancelButton = document.getElementById('cancelSensor');
+      const oldForm = document.getElementById('sensorForm');
+      const key = 'ai-companion-sc171-sensors';
+
+      const icons = {
+        camera: '<path d="M15 10 20 7v10l-5-3Z"/><rect x="3" y="6" width="12" height="12" rx="2"/>',
+        mic: '<path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3Z"/><path d="M19 11a7 7 0 0 1-14 0"/><path d="M12 18v4"/>',
+        temperature: '<path d="M14 14.8V5a2 2 0 1 0-4 0v9.8a4 4 0 1 0 4 0Z"/>',
+        humidity: '<path d="M12 2s7 7.1 7 12a7 7 0 1 1-14 0c0-4.9 7-12 7-12Z"/>',
+        light: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="M2 12h2"/><path d="M20 12h2"/>',
+        air: '<path d="M4 9h11a3 3 0 1 0-3-3"/><path d="M4 15h14a3 3 0 1 1-3 3"/><path d="M4 12h8"/>',
+        infrared: '<path d="M5 12a7 7 0 0 1 14 0"/><path d="M8 12a4 4 0 0 1 8 0"/><path d="M12 12h.01"/><path d="M12 16v4"/>',
+        radar: '<path d="M12 20v-8"/><path d="M5 12a7 7 0 0 1 14 0"/><path d="M2 12a10 10 0 0 1 20 0"/><path d="M8 12a4 4 0 0 1 8 0"/>',
+        default: '<path d="M4 14a8 8 0 1 1 16 0"/><path d="M12 14 16 9"/><path d="M8 18h8"/>'
+      };
+
+      const presets = {
+        camera: { name: '高清摄像头', metric: '姿态检测/视觉识别', unit: 'fps', value: '30', port: 'Camera / MIPI-CSI', scene: '姿态检测、桌面状态识别、远程看护', icon: 'camera' },
+        mic: { name: '麦克风阵列', metric: '语音唤醒/声源定位', unit: 'dB', value: '42', port: 'Audio / USB', scene: '语音交互、噪声分析、主动提醒', icon: 'mic' },
+        temperature: { name: '温湿度传感器', metric: '温度/湿度', unit: '°C / %RH', value: '26.4 / 58', port: 'Sensors / I2C', scene: '环境监测、舒适度分析', icon: 'temperature' },
+        light: { name: '光照传感器', metric: '照度', unit: 'lux', value: '430', port: 'Sensors J1201', scene: '办公照明建议、专注模式联动', icon: 'light' },
+        air: { name: '空气质量传感器', metric: 'AQI / TVOC / CO2', unit: 'AQI', value: '46', port: 'Sensors / I2C', scene: '室内环境质量分析、通风提醒', icon: 'air' },
+        infrared: { name: '红外接近传感器', metric: '接近距离', unit: 'cm', value: '35', port: 'GPIO / ADC', scene: '靠近唤醒、桌面交互感知', icon: 'infrared' },
+        radar: { name: '毫米波雷达', metric: '人体存在/姿态', unit: 'state', value: '有人', port: 'UART5 / Radar', scene: '存在检测、姿态检测、睡眠/久坐提醒', icon: 'radar' }
+      };
+
+      const defaults = [
+        { id: 'camera', status: 'normal', ...presets.camera },
+        { id: 'mic', status: 'normal', ...presets.mic },
+        { id: 'temperature', status: 'normal', ...presets.temperature },
+        { id: 'light', status: 'normal', ...presets.light },
+        { id: 'air', status: 'warn', ...presets.air },
+        { id: 'infrared', status: 'normal', ...presets.infrared },
+        { id: 'radar', status: 'normal', ...presets.radar }
+      ];
+
+      let data = JSON.parse(localStorage.getItem(key) || 'null') || defaults;
+
+      function esc(value) {
+        return String(value || '').replace(/[&<>"']/g, (char) => ({
+          '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+        }[char]));
+      }
+
+      function stateText(status) {
+        return status === 'danger' ? '异常' : status === 'warn' ? '关注' : '正常';
+      }
+
+      function persist() {
+        localStorage.setItem(key, JSON.stringify(data));
+      }
+
+      function render() {
+        grid.innerHTML = data.map((item) => `
+          <article class="sensor-card" data-id="${esc(item.id)}">
+            <div class="sensor-top">
+              <span class="sensor-name">
+                <svg viewBox="0 0 24 24">${icons[item.icon] || icons.default}</svg>
+                ${esc(item.name)}
+              </span>
+              <button class="sensor-delete" type="button" title="删除传感器" aria-label="删除 ${esc(item.name)}">×</button>
+            </div>
+            <div class="sensor-value"><strong>${esc(item.value)}</strong><span>${esc(item.unit)}</span></div>
+            <div class="sensor-time">
+              <span class="status ${item.status === 'normal' ? '' : item.status}">${stateText(item.status)}</span>
+              更新于 ${esc(item.updatedAt || new Date().toLocaleTimeString('zh-CN', { hour12: false }))}
+            </div>
+            <div class="sensor-meta">
+              <span>${esc(item.metric)}</span>
+              <span>${esc(item.port)}</span>
+              <span>${esc(item.scene)}</span>
+            </div>
+          </article>
+        `).join('');
+      }
+
+      function replaceForm() {
+        const freshForm = oldForm.cloneNode(false);
+        freshForm.id = 'sensorForm';
+        freshForm.innerHTML = `
+          <div class="form">
+            <div class="field">
+              <label for="sensorType">传感器类型</label>
+              <select id="sensorType" name="type">
+                <option value="camera">高清摄像头</option>
+                <option value="mic">麦克风阵列</option>
+                <option value="temperature">温湿度传感器</option>
+                <option value="light">光照传感器</option>
+                <option value="air">空气质量传感器</option>
+                <option value="infrared">红外接近传感器</option>
+                <option value="radar">毫米波雷达</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="sensorName">显示名称</label>
+              <input id="sensorName" name="name" type="text" required>
+            </div>
+            <div class="field">
+              <label for="sensorMetric">采集指标</label>
+              <input id="sensorMetric" name="metric" type="text" required>
+            </div>
+            <div class="field">
+              <label for="sensorValue">当前数值</label>
+              <input id="sensorValue" name="value" type="text" required>
+            </div>
+            <div class="field">
+              <label for="sensorUnit">单位</label>
+              <input id="sensorUnit" name="unit" type="text">
+            </div>
+            <div class="field">
+              <label for="sensorPort">接入接口</label>
+              <input id="sensorPort" name="port" type="text" required>
+            </div>
+            <div class="field">
+              <label for="sensorScene">AI联动能力</label>
+              <input id="sensorScene" name="scene" type="text" required>
+            </div>
+            <div class="field">
+              <label for="sensorStatus">状态</label>
+              <select id="sensorStatus" name="status">
+                <option value="normal">正常</option>
+                <option value="warn">需要关注</option>
+                <option value="danger">异常</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-actions">
+            <button class="button light" id="cancelSensor" type="button">取消</button>
+            <button class="button" type="submit">保存</button>
+          </div>
+        `;
+        oldForm.replaceWith(freshForm);
+        return freshForm;
+      }
+
+      const form = replaceForm();
+
+      function fillPreset(type) {
+        const preset = presets[type];
+        if (!preset) return;
+        form.elements.name.value = preset.name;
+        form.elements.metric.value = preset.metric;
+        form.elements.value.value = preset.value;
+        form.elements.unit.value = preset.unit;
+        form.elements.port.value = preset.port;
+        form.elements.scene.value = preset.scene;
+      }
+
+      function openModal() {
+        modalTitle.textContent = '添加 SC171 传感器';
+        form.reset();
+        fillPreset(form.elements.type.value);
+        modal.classList.add('show');
+        modal.setAttribute('aria-hidden', 'false');
+        form.elements.type.focus();
+      }
+
+      function closeModal() {
+        modal.classList.remove('show');
+        modal.setAttribute('aria-hidden', 'true');
+      }
+
+      addButton.onclick = openModal;
+      closeButton.onclick = closeModal;
+      document.getElementById('cancelSensor').onclick = closeModal;
+      form.elements.type.onchange = () => fillPreset(form.elements.type.value);
+
+      form.onsubmit = (event) => {
+        event.preventDefault();
+        const type = form.elements.type.value;
+        data.push({
+          id: `sensor-${Date.now()}`,
+          icon: presets[type]?.icon || 'default',
+          name: form.elements.name.value.trim(),
+          metric: form.elements.metric.value.trim(),
+          value: form.elements.value.value.trim(),
+          unit: form.elements.unit.value.trim(),
+          port: form.elements.port.value.trim(),
+          scene: form.elements.scene.value.trim(),
+          status: form.elements.status.value,
+          updatedAt: new Date().toLocaleTimeString('zh-CN', { hour12: false })
+        });
+        persist();
+        render();
+        closeModal();
+      };
+
+      grid.onclick = (event) => {
+        const button = event.target.closest('.sensor-delete');
+        if (!button) return;
+        const card = button.closest('.sensor-card');
+        data = data.filter((item) => item.id !== card.dataset.id);
+        persist();
+        render();
+      };
+
+      modal.onclick = (event) => {
+        if (event.target === modal) closeModal();
+      };
+
+      render();
+    })();
+  </script>
+  <script>
+    (() => {
+      const clock = document.getElementById('cameraClock');
+      const toggle = document.getElementById('cameraToggle');
+      const state = document.getElementById('cameraState');
+      const stage = document.getElementById('cameraStage');
+      const snapshot = document.getElementById('cameraSnapshot');
+      const fullscreen = document.getElementById('cameraFullscreen');
+      let paused = false;
+
+      function tick() {
+        if (clock) {
+          clock.textContent = new Date().toLocaleTimeString('zh-CN', { hour12: false });
+        }
+      }
+
+      tick();
+      setInterval(tick, 1000);
+
+      if (toggle) {
+        toggle.addEventListener('click', () => {
+          paused = !paused;
+          toggle.textContent = paused ? '继续' : '暂停';
+          state.textContent = paused ? '画面已暂停' : '实时预览中';
+          stage.style.filter = paused ? 'grayscale(.35)' : 'none';
+        });
+      }
+
+      if (snapshot) {
+        snapshot.addEventListener('click', () => {
+          state.textContent = '已抓拍 1 张';
+          setTimeout(() => {
+            if (!paused) state.textContent = '实时预览中';
+          }, 1400);
+        });
+      }
+
+      if (fullscreen && stage && stage.requestFullscreen) {
+        fullscreen.addEventListener('click', () => stage.requestFullscreen());
+      }
+    })();
+  </script>
+</body>
+</html>

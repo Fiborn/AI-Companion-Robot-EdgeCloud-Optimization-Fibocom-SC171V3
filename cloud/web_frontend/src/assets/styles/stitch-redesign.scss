@@ -1,0 +1,1263 @@
+:root {
+  --iot-primary: #07889b;
+  --iot-primary-dark: #06324a;
+  --iot-primary-soft: #e7f8fb;
+  --iot-cyan: #12b8c8;
+  --iot-green: #16a34a;
+  --iot-amber: #f59e0b;
+  --iot-red: #ef4444;
+  --iot-ink: #102033;
+  --iot-text: #475569;
+  --iot-muted: #7c8ca1;
+  --iot-line: #dde7f3;
+  --iot-bg: #f4f7fb;
+  --iot-surface: #ffffff;
+  --iot-surface-soft: #f8fafc;
+  --iot-shadow: 0 14px 34px rgba(16, 32, 51, 0.08);
+  --iot-shadow-strong: 0 20px 50px rgba(6, 50, 74, 0.16);
+}
+
+body {
+  background: var(--iot-bg);
+  color: var(--iot-ink);
+}
+
+#app .main-container {
+  background:
+    linear-gradient(180deg, rgba(234, 241, 255, 0.72) 0, rgba(244, 247, 251, 0) 230px),
+    var(--iot-bg);
+}
+
+.app-container {
+  padding: 22px 24px;
+}
+
+.el-button {
+  border-radius: 7px;
+  font-weight: 600;
+}
+
+.el-button--primary {
+  background: var(--iot-primary);
+  border-color: var(--iot-primary);
+  box-shadow: 0 8px 18px rgba(7, 136, 155, 0.18);
+}
+
+.el-button--primary:hover,
+.el-button--primary:focus {
+  background: #066f7f;
+  border-color: #066f7f;
+}
+
+.el-input__inner,
+.el-textarea__inner {
+  border-color: var(--iot-line);
+  border-radius: 7px;
+}
+
+.el-input__inner:focus,
+.el-textarea__inner:focus {
+  border-color: var(--iot-primary);
+  box-shadow: 0 0 0 3px rgba(7, 136, 155, 0.1);
+}
+
+.navbar {
+  height: 56px !important;
+  background: rgba(255, 255, 255, 0.94) !important;
+  border-bottom: 1px solid rgba(221, 231, 243, 0.86) !important;
+  box-shadow: 0 10px 28px rgba(16, 32, 51, 0.08) !important;
+  backdrop-filter: blur(12px);
+}
+
+.navbar .right-menu .right-menu-item,
+.navbar .hamburger-container,
+.navbar .right-menu .avatar-container {
+  border-radius: 8px !important;
+}
+
+.navbar .right-menu .right-menu-item.hover-effect:hover,
+.navbar .hamburger-container:hover,
+.navbar .right-menu .avatar-container:hover {
+  color: var(--iot-primary) !important;
+  background: var(--iot-primary-soft) !important;
+}
+
+#app .sidebar-container {
+  background:
+    linear-gradient(180deg, rgba(6, 182, 212, 0.14) 0, rgba(6, 182, 212, 0) 190px),
+    linear-gradient(180deg, #102033 0%, #132b48 54%, #0c1a2c 100%) !important;
+  border-radius: 0 !important;
+  box-shadow: 12px 0 34px rgba(16, 32, 51, 0.16) !important;
+}
+
+#app .sidebar-container .sidebar-logo-container {
+  height: 60px;
+  background: rgba(8, 21, 37, 0.42) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+#app .sidebar-container .sidebar-logo-container .sidebar-logo-link {
+  display: flex !important;
+  align-items: center !important;
+  width: 100% !important;
+  height: 100% !important;
+  line-height: normal !important;
+  overflow: hidden;
+}
+
+#app .sidebar-container .sidebar-logo-container .sidebar-brand {
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+}
+
+#app .sidebar-container .sidebar-logo-container::before {
+  background: linear-gradient(180deg, var(--iot-cyan), var(--iot-primary));
+}
+
+#app .openSidebar .sidebar-logo-container.collapse {
+  justify-content: flex-start;
+  padding-left: 16px;
+}
+
+#app .openSidebar .sidebar-logo-container.collapse .sidebar-logo {
+  margin-right: 10px;
+}
+
+#app .hideSidebar .sidebar-logo-container .sidebar-brand {
+  display: none;
+}
+
+#app .sidebar-container .el-menu-item,
+#app .sidebar-container .el-submenu__title {
+  height: 44px !important;
+  line-height: 44px !important;
+  margin: 3px 10px 3px 8px;
+  border-radius: 8px !important;
+}
+
+#app .sidebar-container.theme-dark .el-menu-item.is-active,
+#app .sidebar-container.theme-dark .el-submenu.is-active > .el-submenu__title {
+  background: linear-gradient(90deg, rgba(37, 99, 235, 0.9), rgba(6, 182, 212, 0.42)) !important;
+  color: #fff !important;
+}
+
+#app .sidebar-container.theme-dark .el-menu-item.is-active::before {
+  display: none;
+}
+
+.tags-view-container {
+  border-bottom: 1px solid rgba(221, 231, 243, 0.82) !important;
+  box-shadow: none !important;
+}
+
+.login-page {
+  justify-content: center;
+  align-items: flex-end;
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, rgba(9, 20, 35, 0.78), rgba(9, 20, 35, 0.26) 48%, rgba(244, 247, 251, 0.96) 49%),
+    linear-gradient(135deg, #102033 0%, #17416f 44%, #f4f7fb 44.2%, #f4f7fb 100%) !important;
+}
+
+.login-page.login-dark {
+  background:
+    radial-gradient(circle at 78% 18%, rgba(0, 218, 243, 0.14), transparent 34%),
+    linear-gradient(90deg, rgba(6, 21, 35, 0.96), rgba(8, 30, 48, 0.88) 50%, rgba(12, 31, 47, 0.98) 50.2%),
+    linear-gradient(135deg, #071625 0%, #102033 48%, #061523 48.2%, #061523 100%) !important;
+}
+
+.login-page.login-light {
+  background:
+    linear-gradient(90deg, rgba(9, 20, 35, 0.78), rgba(9, 20, 35, 0.26) 48%, rgba(244, 247, 251, 0.96) 49%),
+    linear-gradient(135deg, #102033 0%, #17416f 44%, #f4f7fb 44.2%, #f4f7fb 100%) !important;
+}
+
+.login-page::before {
+  content: "AI Companion Robot Admin";
+  position: absolute;
+  left: clamp(28px, 7vw, 96px);
+  top: 17vh;
+  max-width: 520px;
+  color: #fff;
+  font-size: clamp(34px, 5vw, 58px);
+  line-height: 1.08;
+  font-weight: 800;
+}
+
+.login-page::after {
+  content: "陪伴状态 / 语音会话 / 视觉看护 / 模型与传感联动";
+  position: absolute;
+  left: clamp(28px, 7vw, 96px);
+  top: calc(17vh + 142px);
+  color: rgba(255, 255, 255, 0.76);
+  font-size: 15px;
+}
+
+.login-card {
+  position: relative;
+  z-index: 1;
+  width: 420px !important;
+  margin-right: clamp(20px, 8vw, 128px);
+  padding: 34px 34px 30px !important;
+  border: 1px solid rgba(221, 231, 243, 0.92);
+  border-radius: 8px !important;
+  box-shadow: var(--iot-shadow-strong) !important;
+}
+
+.login-page.login-dark .login-card {
+  background: #102033 !important;
+  border-color: #273a4c !important;
+  box-shadow: 0 22px 56px rgba(0, 0, 0, 0.34) !important;
+}
+
+.card-logo {
+  border-radius: 8px;
+  box-shadow: 0 8px 22px rgba(37, 99, 235, 0.16);
+}
+
+.card-title {
+  color: var(--iot-ink) !important;
+  font-size: 24px !important;
+}
+
+.login-page.login-dark .card-title {
+  color: #eef7ff !important;
+}
+
+.card-subtitle {
+  color: var(--iot-muted) !important;
+}
+
+.login-page.login-dark .card-subtitle,
+.login-page.login-dark .page-footer {
+  color: rgba(215, 229, 242, 0.62) !important;
+}
+
+.login-btn {
+  background: linear-gradient(90deg, var(--iot-primary), var(--iot-cyan)) !important;
+  border: 0 !important;
+  box-shadow: 0 12px 24px rgba(7, 136, 155, 0.22);
+}
+
+.companion-home {
+  background:
+    linear-gradient(180deg, rgba(234, 241, 255, 0.96) 0, rgba(244, 247, 251, 0.8) 310px, var(--iot-bg) 100%) !important;
+  color: var(--iot-ink) !important;
+}
+
+.companion-home .hero {
+  min-height: 168px !important;
+  padding: 28px 32px !important;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 8px !important;
+  background:
+    linear-gradient(90deg, rgba(4, 18, 28, 0.94), rgba(6, 50, 74, 0.91)),
+    linear-gradient(135deg, var(--iot-primary-dark), var(--iot-primary) 58%, var(--iot-cyan)) !important;
+  box-shadow: var(--iot-shadow-strong) !important;
+}
+
+.companion-home .hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px) 0 0 / 42px 42px,
+    linear-gradient(90deg, rgba(255, 255, 255, 0.07) 1px, transparent 1px) 0 0 / 42px 42px;
+  opacity: 0.35;
+}
+
+.companion-home .hero::after {
+  display: none;
+}
+
+.companion-home .hero h1 {
+  color: #f8fdff !important;
+  font-size: 30px !important;
+  letter-spacing: 0 !important;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.28);
+}
+
+.companion-home .hero p {
+  max-width: 720px;
+  color: rgba(238, 247, 255, 0.9) !important;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
+}
+
+.companion-home .hero-btn {
+  background: rgba(255, 255, 255, 0.12) !important;
+  border-color: rgba(255, 255, 255, 0.28) !important;
+  box-shadow: none;
+}
+
+.companion-home .ai-state {
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 8px !important;
+  background: rgba(255, 255, 255, 0.12) !important;
+}
+
+.companion-home .metric-card,
+.companion-home .panel {
+  border: 1px solid rgba(221, 231, 243, 0.92) !important;
+  border-radius: 8px !important;
+  box-shadow: var(--iot-shadow) !important;
+}
+
+.companion-home .metric-card {
+  min-height: 94px !important;
+  background: linear-gradient(180deg, #fff, #f9fbff) !important;
+}
+
+.companion-home .metric-card strong {
+  color: var(--iot-ink);
+}
+
+.companion-home .metric-icon {
+  border-radius: 8px !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.34);
+}
+
+.companion-home .metric-icon.blue,
+.companion-home .chat-face {
+  background: linear-gradient(135deg, var(--iot-primary), #22d3ee) !important;
+}
+
+.companion-home .metric-icon.green {
+  background: linear-gradient(135deg, var(--iot-green), #22c55e) !important;
+}
+
+.companion-home .metric-icon.orange {
+  background: linear-gradient(135deg, var(--iot-amber), #fbbf24) !important;
+}
+
+.companion-home .metric-icon.cyan {
+  background: linear-gradient(135deg, var(--iot-cyan), #22d3ee) !important;
+}
+
+.companion-home .panel-title {
+  color: var(--iot-ink);
+}
+
+.companion-home .select-like,
+.companion-home .chip {
+  border-color: var(--iot-line) !important;
+  border-radius: 6px !important;
+  background: var(--iot-surface-soft) !important;
+  color: var(--iot-text) !important;
+}
+
+.companion-home .camera-stage {
+  min-height: 340px !important;
+  border-radius: 8px !important;
+  background:
+    linear-gradient(135deg, rgba(9, 20, 35, 0.96), rgba(18, 58, 120, 0.86)),
+    linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px) 0 0 / 48px 48px,
+    linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px) 0 0 / 48px 48px !important;
+}
+
+.companion-home .camera-empty,
+.companion-home .camera-empty strong {
+  color: #f8fdff !important;
+}
+
+.companion-home .camera-empty span {
+  color: rgba(238, 247, 255, 0.78) !important;
+}
+
+.companion-home .camera-empty i {
+  color: rgba(238, 247, 255, 0.88) !important;
+  background: rgba(238, 247, 255, 0.12) !important;
+}
+
+.companion-home .camera-live-badge,
+.companion-home .camera-hud,
+.companion-home .camera-bottom {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.companion-home .camera-stat,
+.companion-home .sensor-card,
+.companion-home .history-item,
+.companion-home .alert-empty {
+  border-color: var(--iot-line) !important;
+  border-radius: 8px !important;
+  background: linear-gradient(180deg, #fff, #f9fbff) !important;
+}
+
+.companion-home .sensor-card {
+  min-height: 150px !important;
+}
+
+.companion-home .sensor-symbol {
+  color: var(--iot-primary);
+  background: var(--iot-primary-soft) !important;
+}
+
+.companion-home .sensor-value strong {
+  color: var(--iot-ink);
+  font-size: 29px !important;
+}
+
+.companion-home .chart {
+  background:
+    linear-gradient(var(--iot-line) 1px, transparent 1px) 0 0 / 100% 49px,
+    linear-gradient(90deg, var(--iot-line) 1px, transparent 1px) 0 0 / 80px 100%,
+    #fbfdff !important;
+}
+
+.companion-home .chart polyline {
+  stroke: var(--iot-primary);
+}
+
+.companion-home .chat-panel {
+  box-shadow: 0 18px 40px rgba(16, 32, 51, 0.1) !important;
+}
+
+.companion-home .chat-head,
+.companion-home .chat-footer {
+  background: linear-gradient(180deg, #fff, #f8fbff) !important;
+}
+
+.companion-home .bubble {
+  border: 1px solid var(--iot-line);
+  background: var(--iot-surface-soft) !important;
+  box-shadow: none !important;
+}
+
+.companion-home .message.user .bubble {
+  border: 0;
+  background: linear-gradient(135deg, var(--iot-primary), var(--iot-cyan)) !important;
+}
+
+.companion-home .prompt {
+  border-color: #cfe0ff !important;
+  color: var(--iot-primary) !important;
+  background: var(--iot-primary-soft) !important;
+}
+
+@media (max-width: 900px) {
+  .login-page {
+    align-items: center;
+    background:
+      linear-gradient(180deg, rgba(9, 20, 35, 0.78), rgba(244, 247, 251, 0.98) 44%),
+      var(--iot-bg) !important;
+  }
+
+  .login-page::before,
+  .login-page::after {
+    display: none;
+  }
+
+  .login-card {
+    margin-right: 0;
+  }
+
+  .companion-home .hero {
+    min-height: auto !important;
+  }
+}
+
+.app-wrapper.theme-light,
+.app-wrapper {
+  --companion-bg: #eef8fa;
+  --companion-bg-glow: rgba(207, 250, 254, 0.78);
+  --companion-card: #ffffff;
+  --companion-card-glass: rgba(255, 255, 255, 0.72);
+  --companion-subtle: #f0fbfd;
+  --companion-video: #eef8fa;
+  --companion-chip: #e7eef1;
+  --companion-line: #d2e1e5;
+  --companion-text: #0d1f24;
+  --companion-muted: #60747a;
+  --companion-primary: #00788a;
+  --companion-primary-soft: #d8f1f4;
+  --companion-primary-line: #9adce5;
+  --companion-on-primary: #ffffff;
+  --companion-success: #16a34a;
+  --companion-shadow: rgba(6, 35, 42, 0.12);
+  --companion-hero-start: #14d9e8;
+  --companion-hero-end: #effdff;
+  --companion-hero-line: rgba(0, 218, 243, 0.18);
+  --companion-hero-border: rgba(0, 184, 207, 0.24);
+  --companion-hero-title: #007384;
+  --companion-hero-text: #006875;
+  --companion-hero-muted: rgba(0, 104, 117, 0.78);
+}
+
+.app-wrapper.theme-dark {
+  --companion-bg: #061523;
+  --companion-bg-glow: rgba(5, 20, 36, 0.86);
+  --companion-card: #142334;
+  --companion-card-glass: rgba(28, 43, 60, 0.86);
+  --companion-subtle: #071827;
+  --companion-video: #04111e;
+  --companion-chip: #1d2c3e;
+  --companion-line: #2d4053;
+  --companion-text: #eef7ff;
+  --companion-muted: #a7b7c4;
+  --companion-primary: #00daf3;
+  --companion-primary-soft: rgba(0, 218, 243, 0.13);
+  --companion-primary-line: rgba(0, 218, 243, 0.42);
+  --companion-on-primary: #002c35;
+  --companion-success: #22c55e;
+  --companion-shadow: rgba(0, 0, 0, 0.28);
+  --companion-hero-start: #092838;
+  --companion-hero-end: #102334;
+  --companion-hero-line: rgba(0, 218, 243, 0.14);
+  --companion-hero-border: #254154;
+  --companion-hero-title: #ffffff;
+  --companion-hero-text: #ffffff;
+  --companion-hero-muted: rgba(238, 247, 255, 0.78);
+}
+
+#app .app-wrapper.theme-light .main-container {
+  background: #eef8fa !important;
+}
+
+#app .app-wrapper.theme-dark .main-container {
+  background: #061523 !important;
+}
+
+#app .app-wrapper.theme-light .navbar,
+#app .app-wrapper.theme-light .tags-view-container {
+  background: #ffffff !important;
+  border-color: #d2e1e5 !important;
+  box-shadow: none !important;
+}
+
+#app .app-wrapper.theme-dark .navbar,
+#app .app-wrapper.theme-dark .tags-view-container {
+  background: #102033 !important;
+  border-color: #273a4c !important;
+  box-shadow: none !important;
+}
+
+#app .app-wrapper.theme-dark .navbar.nav3 {
+  background: #102033 !important;
+}
+
+#app .app-wrapper.theme-dark .navbar .sidebar-logo-container {
+  background: #102033 !important;
+  border-color: #273a4c !important;
+}
+
+#app .app-wrapper.theme-dark .navbar .sidebar-logo-container .sidebar-title {
+  color: #eef7ff !important;
+}
+
+#app .app-wrapper.theme-dark .navbar .sidebar-logo-container small {
+  color: rgba(215, 229, 242, 0.68) !important;
+}
+
+#app .app-wrapper.theme-dark .navbar .right-menu .right-menu-item,
+#app .app-wrapper.theme-dark .navbar .hamburger-container,
+#app .app-wrapper.theme-dark .navbar .user-nickname,
+#app .app-wrapper.theme-dark .breadcrumb-container .el-breadcrumb__inner,
+#app .app-wrapper.theme-dark .tags-view-container .tags-view-wrapper .tags-view-item {
+  color: #d7e5f2 !important;
+}
+
+#app .app-wrapper.theme-dark .navbar .topmenu-container.el-menu,
+#app .app-wrapper.theme-dark .navbar .topbar-menu.el-menu,
+#app .app-wrapper.theme-dark .navbar .el-menu--horizontal,
+#app .app-wrapper.theme-dark .navbar .topbar-container,
+#app .app-wrapper.theme-dark .navbar .topmenu-container {
+  background: transparent !important;
+  border-bottom: 0 !important;
+}
+
+#app .app-wrapper.theme-dark .navbar .topmenu-container.el-menu--horizontal > .el-menu-item,
+#app .app-wrapper.theme-dark .navbar .topmenu-container.el-menu--horizontal > .el-submenu .el-submenu__title,
+#app .app-wrapper.theme-dark .navbar .topbar-menu.el-menu--horizontal .el-menu-item,
+#app .app-wrapper.theme-dark .navbar .topbar-menu.el-menu--horizontal .el-submenu__title,
+#app .app-wrapper.theme-dark .navbar .topbar-menu.el-menu--horizontal .svg-icon,
+#app .app-wrapper.theme-dark .navbar .topmenu-container.el-menu--horizontal .svg-icon {
+  color: #d7e5f2 !important;
+  background: transparent !important;
+  border-bottom-color: transparent !important;
+}
+
+#app .app-wrapper.theme-dark .navbar .topmenu-container.el-menu--horizontal > .el-menu-item:hover,
+#app .app-wrapper.theme-dark .navbar .topmenu-container.el-menu--horizontal > .el-submenu:hover .el-submenu__title,
+#app .app-wrapper.theme-dark .navbar .topbar-menu.el-menu--horizontal .el-menu-item:hover,
+#app .app-wrapper.theme-dark .navbar .topbar-menu.el-menu--horizontal .el-submenu__title:hover {
+  color: #00daf3 !important;
+  background: rgba(0, 218, 243, 0.1) !important;
+}
+
+#app .app-wrapper.theme-dark .navbar .topmenu-container.el-menu--horizontal > .el-menu-item.is-active,
+#app .app-wrapper.theme-dark .navbar .topmenu-container.el-menu--horizontal > .el-submenu.is-active .el-submenu__title,
+#app .app-wrapper.theme-dark .navbar .topbar-menu.el-menu--horizontal .el-menu-item.is-active,
+#app .app-wrapper.theme-dark .navbar .topbar-menu.el-menu--horizontal .el-submenu.is-active .el-submenu__title {
+  color: #00daf3 !important;
+  background: rgba(0, 218, 243, 0.08) !important;
+  border-bottom-color: #00daf3 !important;
+}
+
+#app .app-wrapper.theme-dark .navbar .right-menu .right-menu-item.hover-effect:hover,
+#app .app-wrapper.theme-dark .navbar .hamburger-container:hover,
+#app .app-wrapper.theme-dark .navbar .avatar-container:hover {
+  color: #00daf3 !important;
+  background: rgba(0, 218, 243, 0.1) !important;
+}
+
+#app .app-wrapper.theme-light .sidebar-container.theme-dark,
+#app .app-wrapper.theme-light .sidebar-container {
+  background: #f3fbfc !important;
+  border-right: 1px solid #d2e1e5 !important;
+  box-shadow: none !important;
+}
+
+#app .app-wrapper.theme-dark .sidebar-container.theme-dark,
+#app .app-wrapper.theme-dark .sidebar-container {
+  background: #071625 !important;
+  border-right: 1px solid #273a4c !important;
+  box-shadow: none !important;
+}
+
+#app .app-wrapper.theme-light .sidebar-container .sidebar-logo-container {
+  background: #ffffff !important;
+  border-bottom: 1px solid #d2e1e5 !important;
+}
+
+#app .app-wrapper.theme-dark .sidebar-container .sidebar-logo-container {
+  background: #102033 !important;
+  border-bottom: 1px solid #273a4c !important;
+}
+
+#app .app-wrapper.theme-light .sidebar-container .el-menu-item,
+#app .app-wrapper.theme-light .sidebar-container .el-submenu__title,
+#app .app-wrapper.theme-light .sidebar-container .svg-icon {
+  color: #152a31 !important;
+}
+
+#app .app-wrapper.theme-dark .sidebar-container .el-menu-item,
+#app .app-wrapper.theme-dark .sidebar-container .el-submenu__title,
+#app .app-wrapper.theme-dark .sidebar-container .svg-icon {
+  color: #d7e5f2 !important;
+}
+
+#app .app-wrapper.theme-light .sidebar-container .el-menu-item.is-active,
+#app .app-wrapper.theme-light .sidebar-container .el-submenu.is-active > .el-submenu__title {
+  color: #00788a !important;
+  background: #e4eff2 !important;
+}
+
+#app .app-wrapper.theme-dark .sidebar-container.theme-dark .el-menu-item.is-active,
+#app .app-wrapper.theme-dark .sidebar-container.theme-dark .el-submenu.is-active > .el-submenu__title {
+  color: #00daf3 !important;
+  background: rgba(0, 218, 243, 0.08) !important;
+}
+
+#app .app-wrapper.theme-light .tags-view-container .tags-view-wrapper .tags-view-item.active {
+  color: #00788a !important;
+  background: #e4eff2 !important;
+  border-color: #d2e1e5 !important;
+}
+
+#app .app-wrapper.theme-dark .tags-view-container .tags-view-wrapper .tags-view-item.active {
+  color: #00daf3 !important;
+  background: #102033 !important;
+  border-color: #00788a !important;
+}
+
+#app .app-wrapper.theme-dark .tags-view-container .tags-view-wrapper .tags-view-item {
+  color: #a7b7c4 !important;
+  background: #142334 !important;
+  border-color: #273a4c !important;
+}
+
+#app .app-wrapper.theme-dark .tags-view-container .tags-view-wrapper .tags-view-item:hover {
+  color: #00daf3 !important;
+  background: #193047 !important;
+}
+
+#app .app-wrapper.theme-dark .companion-home .metric-card,
+#app .app-wrapper.theme-dark .companion-home .panel,
+#app .app-wrapper.theme-dark .companion-home .chat-head,
+#app .app-wrapper.theme-dark .companion-home .chat-footer,
+#app .app-wrapper.theme-dark .companion-home .chat-body {
+  color: var(--companion-text) !important;
+  background: var(--companion-card) !important;
+  border-color: var(--companion-line) !important;
+  box-shadow: none !important;
+}
+
+#app .app-wrapper.theme-dark .companion-home .hero {
+  background:
+    repeating-linear-gradient(45deg, rgba(0, 218, 243, 0.13) 0 1px, transparent 1px 12px),
+    linear-gradient(90deg, #092838 0%, #102334 100%) !important;
+}
+
+#app .app-wrapper.theme-dark .companion-home .hero::before {
+  background:
+    repeating-linear-gradient(45deg, rgba(0, 218, 243, 0.16) 0 1px, transparent 1px 12px) !important;
+  opacity: 1 !important;
+}
+
+#app .app-wrapper.theme-dark .companion-home .hero h1,
+#app .app-wrapper.theme-dark .companion-home .metric-card strong,
+#app .app-wrapper.theme-dark .companion-home .camera-stat strong,
+#app .app-wrapper.theme-dark .companion-home .sensor-value strong,
+#app .app-wrapper.theme-dark .companion-home .panel-title,
+#app .app-wrapper.theme-dark .companion-home .chat-person strong,
+#app .app-wrapper.theme-dark .companion-home .bubble {
+  color: var(--companion-text) !important;
+}
+
+#app .app-wrapper.theme-dark .companion-home .hero p,
+#app .app-wrapper.theme-dark .companion-home .metric-card small,
+#app .app-wrapper.theme-dark .companion-home .camera-stat small,
+#app .app-wrapper.theme-dark .companion-home .camera-hud,
+#app .app-wrapper.theme-dark .companion-home .camera-bottom,
+#app .app-wrapper.theme-dark .companion-home .panel-tools {
+  color: var(--companion-muted) !important;
+}
+
+#app .app-wrapper.theme-dark .companion-home .hero p {
+  color: rgba(238, 247, 255, 0.9) !important;
+}
+
+#app .app-wrapper.theme-dark .companion-home .metric-icon,
+#app .app-wrapper.theme-dark .companion-home .companion-face,
+#app .app-wrapper.theme-dark .companion-home .chat-face {
+  color: var(--companion-primary) !important;
+  background: var(--companion-primary-soft) !important;
+  border-color: var(--companion-primary-line) !important;
+}
+
+#app .app-wrapper.theme-dark .companion-home .metric-icon.green {
+  color: #22c55e !important;
+  background: rgba(34, 197, 94, 0.14) !important;
+  border-color: rgba(34, 197, 94, 0.35) !important;
+}
+
+#app .app-wrapper.theme-dark .companion-home .metric-icon.orange {
+  color: #fb923c !important;
+  background: rgba(251, 146, 60, 0.14) !important;
+  border-color: rgba(251, 146, 60, 0.35) !important;
+}
+
+#app .app-wrapper.theme-dark .companion-home .metric-icon.cyan {
+  color: #60a5fa !important;
+  background: rgba(37, 99, 235, 0.22) !important;
+  border-color: rgba(96, 165, 250, 0.38) !important;
+}
+
+#app .app-wrapper.theme-dark .companion-home .select-like,
+#app .app-wrapper.theme-dark .companion-home .chip,
+#app .app-wrapper.theme-dark .companion-home .camera-stat,
+#app .app-wrapper.theme-dark .companion-home .sensor-card,
+#app .app-wrapper.theme-dark .companion-home .bubble,
+#app .app-wrapper.theme-dark .companion-home .chat-input .el-input__inner {
+  color: var(--companion-text) !important;
+  background: var(--companion-subtle) !important;
+  border-color: var(--companion-line) !important;
+}
+
+#app .app-wrapper.theme-dark .companion-home .sensor-symbol,
+#app .app-wrapper.theme-dark .companion-home .sensor-actions button,
+#app .app-wrapper.theme-dark .companion-home .status,
+#app .app-wrapper.theme-dark .companion-home .sensor-meta span {
+  color: #bae6fd !important;
+  background: rgba(14, 165, 233, 0.16) !important;
+  border-color: rgba(56, 189, 248, 0.34) !important;
+}
+
+#app .app-wrapper.theme-dark .companion-home .sensor-actions button:hover {
+  color: #002c35 !important;
+  background: #00daf3 !important;
+}
+
+#app .app-wrapper.theme-dark .companion-home .sensor-delete {
+  color: #a7b7c4 !important;
+  background: rgba(148, 163, 184, 0.12) !important;
+}
+
+#app .app-wrapper.theme-dark .companion-home .sensor-delete:hover {
+  color: #fda4af !important;
+  background: rgba(244, 63, 94, 0.16) !important;
+}
+
+#app .app-wrapper.theme-dark .companion-home .status.offline {
+  color: #c7d2fe !important;
+  background: rgba(99, 102, 241, 0.16) !important;
+}
+
+#app .app-wrapper.theme-dark .companion-home .status.warn {
+  color: #fde68a !important;
+  background: rgba(245, 158, 11, 0.17) !important;
+}
+
+#app .app-wrapper.theme-dark .companion-home .status.danger {
+  color: #fda4af !important;
+  background: rgba(244, 63, 94, 0.16) !important;
+}
+
+#app .app-wrapper.theme-dark .companion-home .message.user .bubble,
+#app .app-wrapper.theme-dark .companion-home .send-button.el-button--primary,
+#app .app-wrapper.theme-dark .companion-home .el-button--primary {
+  color: var(--companion-on-primary) !important;
+  background: var(--companion-primary) !important;
+  border-color: var(--companion-primary) !important;
+}
+
+#app .app-wrapper.theme-dark .companion-home .camera-actions .el-button:not(.el-button--primary) {
+  color: var(--companion-text) !important;
+  background: #1d2c3e !important;
+  border-color: var(--companion-line) !important;
+}
+
+#app .app-wrapper.theme-dark .companion-home .prompt {
+  color: var(--companion-primary) !important;
+  background: transparent !important;
+  border-color: var(--companion-primary-line) !important;
+}
+
+#app .app-wrapper.theme-dark .companion-home .camera-stage,
+#app .app-wrapper.theme-dark .companion-home .camera-stage.offline {
+  background:
+    linear-gradient(135deg, rgba(4, 17, 30, 0.98), rgba(14, 43, 78, 0.94)),
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px) 0 0 / 56px 56px,
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px) 0 0 / 56px 56px !important;
+  border-color: var(--companion-line) !important;
+}
+
+#app .app-wrapper.theme-light .companion-home .hero::before {
+  background:
+    repeating-linear-gradient(45deg, rgba(0, 218, 243, 0.16) 0 1px, transparent 1px 12px) !important;
+  opacity: 1 !important;
+}
+
+/* Dark theme for regular RuoYi list pages and Element UI floating panels. */
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) {
+  min-height: calc(100vh - 84px);
+  background: #061523 !important;
+  color: #d7e5f2 !important;
+}
+
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-form-item__label,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-checkbox,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-pagination,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-pagination__total,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-pagination__jump,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-table,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-table th,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-table tr,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-table td {
+  color: #d7e5f2 !important;
+}
+
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-input__inner,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-textarea__inner,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-input-group__append,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-input-group__prepend,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-input-number__decrease,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-input-number__increase,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-select .el-input__inner,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-pagination .el-input__inner {
+  color: #eef7ff !important;
+  background: #142334 !important;
+  border-color: #2d4053 !important;
+}
+
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-input__inner::placeholder,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-textarea__inner::placeholder {
+  color: #7f93a3 !important;
+}
+
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-table,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-table__expanded-cell,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-table th,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-table tr,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-table td {
+  background: #102033 !important;
+  border-color: #273a4c !important;
+}
+
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-table__header-wrapper th,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-table__fixed-header-wrapper th {
+  background: #142334 !important;
+  color: #eef7ff !important;
+}
+
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-table--enable-row-hover .el-table__body tr:hover > td {
+  background: #193047 !important;
+}
+
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .sensor-value {
+  color: #ffffff !important;
+  font-weight: 700;
+}
+
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .sensor-unit {
+  color: #b9d2ea !important;
+}
+
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .overview-card p {
+  color: #b9d2ea !important;
+}
+
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .overview-card strong {
+  color: #ffffff !important;
+}
+
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .overview-card strong small {
+  color: #d7e5f2 !important;
+}
+
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .overview-card em {
+  color: #7cff5b !important;
+}
+
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .detail-page-head h2,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .panel-title-line h3 {
+  color: #ffffff !important;
+}
+
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .detail-page-head span,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .panel-title-line span,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .trend-box.empty {
+  color: #b9d2ea !important;
+}
+
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .trend-box {
+  background: linear-gradient(180deg, #102033 0%, #0b1b2c 100%) !important;
+  border-color: #273a4c !important;
+}
+
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .trend-grid line {
+  stroke: #273a4c !important;
+}
+
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .trend-labels text {
+  fill: #d7e5f2 !important;
+}
+
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-table::before,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-table::after,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-table__fixed::before,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-table__fixed-right::before {
+  background: #273a4c !important;
+}
+
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .pagination-container,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-pagination button,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-pager li {
+  color: #d7e5f2 !important;
+  background: #061523 !important;
+}
+
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-pager li.active {
+  color: #002c35 !important;
+  background: #00daf3 !important;
+}
+
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-button:not(.el-button--primary):not(.el-button--success):not(.el-button--danger):not(.el-button--warning) {
+  color: #d7e5f2 !important;
+  background: #1d2c3e !important;
+  border-color: #2d4053 !important;
+}
+
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-button.is-plain {
+  background: rgba(0, 218, 243, 0.08) !important;
+  border-color: rgba(0, 218, 243, 0.28) !important;
+}
+
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-button--success.is-plain {
+  color: #4ade80 !important;
+  background: rgba(34, 197, 94, 0.12) !important;
+  border-color: rgba(34, 197, 94, 0.35) !important;
+}
+
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-button--danger.is-plain {
+  color: #fb7185 !important;
+  background: rgba(244, 63, 94, 0.12) !important;
+  border-color: rgba(244, 63, 94, 0.35) !important;
+}
+
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .top-right-btn .el-button {
+  color: #d7e5f2 !important;
+  background: #102033 !important;
+  border-color: #2d4053 !important;
+}
+
+body.iot-theme-dark .el-drawer,
+body.iot-theme-dark .el-dialog,
+body.iot-theme-dark .el-message-box,
+body.iot-theme-dark .el-dropdown-menu,
+body.iot-theme-dark .el-select-dropdown,
+body.iot-theme-dark .el-picker-panel {
+  color: #d7e5f2 !important;
+  background: #102033 !important;
+  border-color: #273a4c !important;
+}
+
+body.iot-theme-dark .el-drawer__body,
+body.iot-theme-dark .drawer-container,
+body.iot-theme-dark .setting-drawer-content,
+body.iot-theme-dark .el-dialog__body,
+body.iot-theme-dark .el-dialog__header,
+body.iot-theme-dark .el-dialog__footer {
+  color: #d7e5f2 !important;
+  background: #102033 !important;
+}
+
+body.iot-theme-dark .drawer-title,
+body.iot-theme-dark .setting-drawer-title,
+body.iot-theme-dark .drawer-container .drawer-title,
+body.iot-theme-dark .drawer-container .drawer-item,
+body.iot-theme-dark .setting-drawer-content .setting-drawer-title,
+body.iot-theme-dark .el-dialog__title,
+body.iot-theme-dark .el-message-box__title,
+body.iot-theme-dark .el-message-box__content {
+  color: #eef7ff !important;
+}
+
+body.iot-theme-dark .el-divider {
+  background-color: #273a4c !important;
+}
+
+body.iot-theme-dark .setting-drawer-block-checbox-item,
+body.iot-theme-dark .nav-wrap .item {
+  background: #1d2c3e !important;
+  border-color: #2d4053 !important;
+}
+
+body.iot-theme-dark .nav-wrap .activeItem,
+body.iot-theme-dark .setting-drawer-block-checbox-item:has(.setting-drawer-block-checbox-selectIcon) {
+  border-color: #00daf3 !important;
+  box-shadow: 0 0 0 3px rgba(0, 218, 243, 0.12);
+}
+
+body.iot-theme-dark .el-radio-button__inner,
+body.iot-theme-dark .el-input__inner,
+body.iot-theme-dark .el-textarea__inner,
+body.iot-theme-dark .el-input-group__append,
+body.iot-theme-dark .el-input-group__prepend {
+  color: #eef7ff !important;
+  background: #142334 !important;
+  border-color: #2d4053 !important;
+}
+
+body.iot-theme-dark .el-radio-button__orig-radio:checked + .el-radio-button__inner {
+  color: #002c35 !important;
+  background: #00daf3 !important;
+  border-color: #00daf3 !important;
+  box-shadow: -1px 0 0 0 #00daf3 !important;
+}
+
+body.iot-theme-dark .el-select-dropdown__item {
+  color: #d7e5f2 !important;
+}
+
+body.iot-theme-dark .el-select-dropdown__item.hover,
+body.iot-theme-dark .el-select-dropdown__item:hover,
+body.iot-theme-dark .el-dropdown-menu__item:focus,
+body.iot-theme-dark .el-dropdown-menu__item:not(.is-disabled):hover {
+  color: #00daf3 !important;
+  background: rgba(0, 218, 243, 0.1) !important;
+}
+
+body.iot-theme-dark .el-dropdown-menu__item,
+body.iot-theme-dark .el-menu--popup,
+body.iot-theme-dark .el-menu--horizontal .el-menu .el-menu-item,
+body.iot-theme-dark .el-menu--horizontal .el-menu .el-submenu__title {
+  color: #d7e5f2 !important;
+  background: #102033 !important;
+  border-color: #273a4c !important;
+}
+
+body.iot-theme-dark .el-menu--horizontal .el-menu .el-menu-item:hover,
+body.iot-theme-dark .el-menu--horizontal .el-menu .el-submenu__title:hover,
+body.iot-theme-dark .el-menu--popup .el-menu-item:hover {
+  color: #00daf3 !important;
+  background: rgba(0, 218, 243, 0.1) !important;
+}
+
+body.iot-theme-dark .el-dropdown-menu__item--divided {
+  border-top-color: #273a4c !important;
+}
+
+body.iot-theme-dark .el-dropdown-menu__item--divided::before {
+  background: #102033 !important;
+}
+
+body.iot-theme-dark .el-select-dropdown__item.selected {
+  color: #00daf3 !important;
+}
+
+body.iot-theme-dark .el-popper[x-placement^="bottom"] .popper__arrow,
+body.iot-theme-dark .el-popper[x-placement^="bottom"] .popper__arrow::after {
+  border-bottom-color: #273a4c !important;
+}
+
+body.iot-theme-dark .el-popper[x-placement^="top"] .popper__arrow,
+body.iot-theme-dark .el-popper[x-placement^="top"] .popper__arrow::after {
+  border-top-color: #273a4c !important;
+}
+
+body.iot-theme-dark .el-button:not(.el-button--primary):not(.el-button--success):not(.el-button--danger):not(.el-button--warning) {
+  color: #d7e5f2 !important;
+  background: #1d2c3e !important;
+  border-color: #2d4053 !important;
+}
+
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-card,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-card__header,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-card__body,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .overview-card,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .toolbar-form,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .tree-sidebar,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .tree-sidebar-content,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .tree-header,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-tree,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-tree-node__content,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .box-card {
+  color: #d7e5f2 !important;
+  background: #102033 !important;
+  border-color: #273a4c !important;
+}
+
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-tree-node__content:hover,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-tree-node:focus > .el-tree-node__content {
+  background: #193047 !important;
+}
+
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .collapse-button-container {
+  background: #142334 !important;
+  border: 1px solid #2d4053 !important;
+  box-shadow: none !important;
+}
+
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .tree-sidebar.collapsed .collapse-button-container {
+  background: #102033 !important;
+}
+
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .collapse-button {
+  color: #a7b7c4 !important;
+}
+
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .collapse-button:hover {
+  color: #00daf3 !important;
+  background: rgba(0, 218, 243, 0.1) !important;
+}
+
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-date-editor,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-range-editor,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-range-input,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-range-separator {
+  color: #eef7ff !important;
+  background: #142334 !important;
+  border-color: #2d4053 !important;
+}
+
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-tag.el-tag--light,
+body.iot-theme-dark .el-tag.el-tag--light {
+  color: #bae6fd !important;
+  background: rgba(14, 165, 233, 0.16) !important;
+  border-color: rgba(56, 189, 248, 0.34) !important;
+}
+
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-tag--success.el-tag--light,
+body.iot-theme-dark .el-tag--success.el-tag--light {
+  color: #86efac !important;
+  background: rgba(34, 197, 94, 0.16) !important;
+  border-color: rgba(74, 222, 128, 0.36) !important;
+}
+
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-tag--info.el-tag--light,
+body.iot-theme-dark .el-tag--info.el-tag--light {
+  color: #c7d2fe !important;
+  background: rgba(99, 102, 241, 0.16) !important;
+  border-color: rgba(129, 140, 248, 0.32) !important;
+}
+
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-tag--warning.el-tag--light,
+body.iot-theme-dark .el-tag--warning.el-tag--light {
+  color: #fde68a !important;
+  background: rgba(245, 158, 11, 0.17) !important;
+  border-color: rgba(251, 191, 36, 0.36) !important;
+}
+
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-tag--danger.el-tag--light,
+body.iot-theme-dark .el-tag--danger.el-tag--light {
+  color: #fda4af !important;
+  background: rgba(244, 63, 94, 0.16) !important;
+  border-color: rgba(251, 113, 133, 0.35) !important;
+}
+
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-checkbox__inner,
+body.iot-theme-dark .el-checkbox__inner {
+  background: #142334 !important;
+  border-color: #2d4053 !important;
+}
+
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-checkbox__input.is-checked .el-checkbox__inner,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-checkbox__input.is-indeterminate .el-checkbox__inner,
+body.iot-theme-dark .el-checkbox__input.is-checked .el-checkbox__inner,
+body.iot-theme-dark .el-checkbox__input.is-indeterminate .el-checkbox__inner {
+  background: #00daf3 !important;
+  border-color: #00daf3 !important;
+}
+
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-checkbox__input.is-disabled .el-checkbox__inner,
+body.iot-theme-dark .el-checkbox__input.is-disabled .el-checkbox__inner {
+  background: #1d2c3e !important;
+  border-color: #273a4c !important;
+}
+
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-checkbox__label,
+body.iot-theme-dark .el-checkbox__label {
+  color: #d7e5f2 !important;
+}
+
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-loading-mask {
+  background: rgba(6, 21, 35, 0.86) !important;
+}
+
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-loading-spinner .path {
+  stroke: #00daf3 !important;
+}
+
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .left-board,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .center-board,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .right-board,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .logo-wrapper,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .components-list,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .components-item,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .components-body,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .drawing-board,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .drawing-item,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-form-item--medium,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-tabs__header,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .el-tabs__content {
+  color: #d7e5f2 !important;
+  background: #102033 !important;
+  border-color: #273a4c !important;
+}
+
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .components-item:hover,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .components-body:hover,
+#app .app-wrapper.theme-dark .app-container:not(.companion-home) .drawing-item:hover {
+  color: #00daf3 !important;
+  background: #193047 !important;
+}
+
+body.iot-theme-dark .el-loading-mask {
+  background: rgba(6, 21, 35, 0.86) !important;
+}
+
+body.iot-theme-dark .el-card,
+body.iot-theme-dark .el-card__header,
+body.iot-theme-dark .el-card__body,
+body.iot-theme-dark .el-date-table,
+body.iot-theme-dark .el-picker-panel__body,
+body.iot-theme-dark .el-picker-panel__footer,
+body.iot-theme-dark .el-time-panel,
+body.iot-theme-dark .el-time-spinner__item {
+  color: #d7e5f2 !important;
+  background: #102033 !important;
+  border-color: #273a4c !important;
+}

@@ -1,0 +1,89 @@
+$primary-color: #2563EB;
+$primary-light: #EAF1FF;
+$primary-dark: #123A78;
+
+$blue: #2563EB;
+$light-blue: #60A5FA;
+$red: #EF4444;
+$pink: #E65D6E;
+$green: #16A34A;
+$tiffany: #06B6D4;
+$yellow: #FAAD14;
+$panGreen: #52C41A;
+
+$success-color: #52C41A;
+$warning-color: #FAAD14;
+$error-color: #FF4D4F;
+$info-color: #1890FF;
+
+$base-menu-color: #8a9099;
+$base-menu-color-active: #ffffff;
+$base-menu-background: #102033;
+$base-logo-title-color: #ffffff;
+
+$base-menu-light-color: rgba(0, 0, 0, 0.70);
+$base-menu-light-background: #ffffff;
+$base-logo-light-title-color: #001529;
+
+$base-sub-menu-background: #0C1A2C;
+$base-sub-menu-hover: rgba(64, 128, 255, 0.2);
+
+$base-sidebar-width: 210px;
+
+$header-background: #ffffff;
+$header-height: 50px;
+
+$card-background: #ffffff;
+$card-border-radius: 8px;
+$card-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+$font-size-xs: 12px;
+$font-size-sm: 13px;
+$font-size-base: 14px;
+$font-size-lg: 16px;
+$font-size-xl: 18px;
+$font-size-xxl: 24px;
+
+$border-radius-sm: 4px;
+$border-radius-base: 6px;
+$border-radius-lg: 8px;
+
+$spacing-xs: 4px;
+$spacing-sm: 8px;
+$spacing-md: 12px;
+$spacing-lg: 16px;
+$spacing-xl: 24px;
+
+$text-primary: #2C3E50;
+$text-secondary: #5A6C7D;
+$text-muted: #8a9099;
+$text-light: #C0C4CC;
+
+// the :export directive is the magic sauce for webpack
+// https://www.bluematador.com/blog/how-to-share-variables-between-js-and-sass
+:export {
+  menuColor: $base-menu-color;
+  menuLightColor: $base-menu-light-color;
+  menuColorActive: $base-menu-color-active;
+  menuBackground: $base-menu-background;
+  menuLightBackground: $base-menu-light-background;
+  subMenuBackground: $base-sub-menu-background;
+  subMenuHover: $base-sub-menu-hover;
+  sideBarWidth: $base-sidebar-width;
+  logoTitleColor: $base-logo-title-color;
+  logoLightTitleColor: $base-logo-light-title-color;
+  primaryColor: $primary-color;
+  primaryLight: $primary-light;
+  primaryDark: $primary-dark;
+  headerBackground: $header-background;
+  headerHeight: $header-height;
+  cardBackground: $card-background;
+  cardBorderRadius: $card-border-radius;
+  cardShadow: $card-shadow;
+  textPrimary: $text-primary;
+  textSecondary: $text-secondary;
+  textMuted: $text-muted;
+  textLight: $text-light;
+  spacingLg: $spacing-lg;
+  spacingXl: $spacing-xl;
+}
